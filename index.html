@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Tower — CARS24</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+:root{
+  --c-orange:#F05A28;--c-orange-l:#FF7A4D;--c-orange-bg:rgba(240,90,40,.06);
+  --c-bg:#F5F5F8;--c-bg2:#EEEEF2;--c-white:#FFFFFF;
+  --c-card:#FFFFFF;--c-card2:#FAFAFE;
+  --c-bdr:#E2E2EA;--c-bdr2:#D0D0DC;
+  --c-txt:#1A1A2E;--c-dim:#5A5A72;--c-muted:#9090A8;
+  --c-green:#0FAF6E;--c-green-bg:rgba(15,175,110,.09);
+  --c-red:#E5364B;--c-red-bg:rgba(229,54,75,.08);
+  --c-yellow:#D4940A;--c-yellow-bg:rgba(212,148,10,.08);
+  --c-blue:#2B7AE0;--c-blue-bg:rgba(43,122,224,.07);
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 2px 8px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--c-bg);color:var(--c-txt);min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--c-white);border-bottom:1px solid var(--c-bdr);padding:10px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.tb-left{display:flex;align-items:center;gap:12px}
+.logo{font-size:20px;font-weight:700;letter-spacing:-.5px;color:var(--c-txt)}.logo span{color:var(--c-orange)}
+.tb-div{width:1px;height:20px;background:var(--c-bdr)}
+.tb-title{font-size:12px;font-weight:600;color:var(--c-muted);letter-spacing:.6px;text-transform:uppercase}
+.tb-right{display:flex;align-items:center;gap:10px}
+
+/* City dropdown */
+.city-select{appearance:none;background:var(--c-bg2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A5A72' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;border:1px solid var(--c-bdr);border-radius:7px;padding:6px 30px 6px 12px;font-size:13px;font-weight:600;color:var(--c-txt);cursor:pointer;font-family:inherit;transition:.15s}
+.city-select:hover{border-color:var(--c-orange)}
+.city-select:focus{outline:none;border-color:var(--c-orange);box-shadow:0 0 0 3px var(--c-orange-bg)}
+
+.date-pill{background:var(--c-bg2);border:1px solid var(--c-bdr);border-radius:7px;padding:5px 12px;font-size:11px;color:var(--c-dim);font-weight:500}
+.date-pill b{color:var(--c-txt)}
+.up-btn{background:var(--c-orange);color:#fff;border:0;border-radius:7px;padding:7px 15px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:.15s;box-shadow:0 1px 4px rgba(240,90,40,.25)}
+.up-btn:hover{background:var(--c-orange-l);transform:translateY(-1px)}
+.up-btn svg{width:14px;height:14px}
+#fileInput{display:none}
+
+/* ── LAYOUT ── */
+.layout{display:flex;gap:0;min-height:calc(100vh - 48px)}
+.main{flex:1;min-width:0;padding:16px 20px 40px;overflow-y:auto}
+.alerts-panel{width:310px;min-width:310px;background:var(--c-white);border-left:1px solid var(--c-bdr);padding:14px;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;box-shadow:-2px 0 8px rgba(0,0,0,.03)}
+
+/* ── TABS ── */
+.nav-tabs{display:flex;gap:2px;border-bottom:1px solid var(--c-bdr);margin-bottom:14px;overflow-x:auto}
+.nav-tab{padding:8px 13px;font-size:12px;font-weight:500;color:var(--c-dim);cursor:pointer;border:0;border-bottom:2px solid transparent;background:0;font-family:inherit;white-space:nowrap;transition:.15s}
+.nav-tab:hover{color:var(--c-txt)}.nav-tab.active{color:var(--c-orange);border-bottom-color:var(--c-orange);font-weight:600}
+
+/* ── SECTION CARD ── */
+.group-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:1.3px;padding:14px 2px 5px}
+.sec-card{background:var(--c-card);border:1px solid var(--c-bdr);border-radius:10px;overflow:hidden;margin-bottom:10px;box-shadow:var(--shadow);transition:box-shadow .15s}
+.sec-card:hover{box-shadow:var(--shadow-md)}
+.sec-card.sub-card{margin-left:24px;border-left:3px solid var(--c-bdr2);border-radius:0 10px 10px 0;box-shadow:none}
+.sec-hdr{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--c-bdr);cursor:pointer;user-select:none;background:var(--c-card2)}
+.sec-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--c-txt)}
+.sec-icon{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.sec-badge{font-size:10px;color:var(--c-muted);font-weight:400;margin-left:6px}
+.sec-toggle{font-size:15px;color:var(--c-muted);transition:transform .2s}
+.sec-toggle.c{transform:rotate(-90deg)}
+.sec-body{padding:0}.sec-body.c{display:none}
+
+/* ── TABLE ── */
+.ct{width:100%;border-collapse:collapse;font-size:12px}
+.ct thead th{padding:5px 10px;text-align:right;font-weight:600;font-size:10px;color:var(--c-muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;background:var(--c-card2)}
+.ct thead th:first-child{text-align:left}
+.ct .tg{text-align:center;font-weight:700;font-size:9px;letter-spacing:1.2px;padding:5px 10px}
+.ct .tg-y{color:var(--c-orange);background:var(--c-orange-bg);border-bottom:2px solid rgba(240,90,40,.2)}
+.ct .tg-m{color:var(--c-blue);background:var(--c-blue-bg);border-bottom:2px solid rgba(43,122,224,.15)}
+.ct .tg-w{color:var(--c-green);background:var(--c-green-bg);border-bottom:2px solid rgba(15,175,110,.15)}
+
+/* Period dividers */
+.ct .dv-y{border-right:2px solid rgba(240,90,40,.2)}
+.ct .dv-m{border-right:2px solid rgba(43,122,224,.15)}
+
+.ct thead .sub-th{border-bottom:1px solid var(--c-bdr)}
+.ct tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid var(--c-bg2);font-variant-numeric:tabular-nums;color:var(--c-txt);white-space:nowrap}
+.ct tbody td:first-child{text-align:left;font-weight:500;color:var(--c-dim);min-width:115px}
+.ct tbody tr:hover td{background:rgba(240,90,40,.025)}
+.ct tbody tr:last-child td{border-bottom:0}
+.na{color:var(--c-muted);font-style:italic;font-size:11px}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:3px}
+.pill-up{background:var(--c-green-bg);color:var(--c-green)}
+.pill-dn{background:var(--c-red-bg);color:var(--c-red)}
+.empty-row td{text-align:center!important;color:var(--c-muted)!important;padding:14px!important;font-style:italic}
+
+/* ── ALERTS ── */
+.ap-title{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:7px;color:var(--c-txt)}
+.ap-sub{font-size:11px;color:var(--c-muted);margin-bottom:12px}
+.ap-section{margin-bottom:14px}
+.ap-section-title{font-size:10px;font-weight:700;color:var(--c-dim);text-transform:uppercase;letter-spacing:.8px;padding:5px 0 3px;border-bottom:1px solid var(--c-bdr);margin-bottom:5px}
+.alert-item{padding:7px 9px;border-radius:7px;margin-bottom:5px;font-size:11px;border-left:3px solid;transition:background .1s}
+.alert-item:hover{filter:brightness(.97)}
+.alert-crit{border-color:var(--c-red);background:var(--c-red-bg)}
+.alert-warn{border-color:var(--c-yellow);background:var(--c-yellow-bg)}
+.al-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1px}
+.al-metric{font-weight:600;color:var(--c-txt);font-size:12px}
+.al-pct{font-weight:700;font-size:11px}.al-pct.red{color:var(--c-red)}.al-pct.yel{color:var(--c-yellow)}
+.al-detail{font-size:10px;color:var(--c-dim)}
+.al-channel{font-size:10px;color:var(--c-muted);margin-top:1px}
+.ap-empty{font-size:12px;color:var(--c-muted);text-align:center;padding:28px 10px;font-style:italic}
+.ap-count{font-size:10px;padding:1px 7px;border-radius:10px;font-weight:700}
+.ap-count.red{background:var(--c-red-bg);color:var(--c-red)}
+.ap-count.grn{background:var(--c-green-bg);color:var(--c-green)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--c-green);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 6px 24px rgba(15,175,110,.3);opacity:0;transition:.4s cubic-bezier(.34,1.56,.64,1);z-index:200}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:1100px){.alerts-panel{width:260px;min-width:260px}}
+@media(max-width:900px){.layout{flex-direction:column}.alerts-panel{width:100%;min-width:0;position:static;height:auto;border-left:0;border-top:1px solid var(--c-bdr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">
+    <div class="logo">CARS<span>24</span></div>
+    <div class="tb-div"></div>
+    <div class="tb-title">Control Tower</div>
+  </div>
+  <div class="tb-right">
+    <select class="city-select" id="citySelect" onchange="switchCity(this.value)">
+      <option value="">Select City</option>
+    </select>
+    <div class="date-pill" id="dateBadge"><b>—</b></div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls">
+    <button class="up-btn" onclick="document.getElementById('fileInput').click()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Refresh Data
+    </button>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="main">
+    <div class="nav-tabs" id="navTabs"></div>
+    <div id="sectionsWrap"></div>
+  </div>
+  <div class="alerts-panel" id="alertsPanel"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// CITIES
+// ═══════════════════════════════════════════
+const CITIES = ['Delhi NCR','Mumbai','Pune','Bangalore','Ahmedabad','Chennai','Hyderabad'];
+
+// ═══════════════════════════════════════════
+// SECTION CONFIG — ordering, icons, grouping, nesting
+// ═══════════════════════════════════════════
+const SEC_CFG = {
+  'Overall':              {ic:'📊',cl:'#F05A28',gp:'core'},
+  'CLASSIFIED':           {ic:'📋',cl:'#4576E0',gp:'acq'},
+  'ATM':                  {ic:'🎬',cl:'#D4940A',gp:'acq'},
+  'GMB':                  {ic:'📍',cl:'#0FAF6E',gp:'acq'},
+  'CRM / WA':             {ic:'💬',cl:'#7C5CFC',gp:'crm'},
+  'CRM / Call us':        {ic:'📲',cl:'#A855F7',gp:'crm'},
+  'IVR':                  {ic:'📞',cl:'#E27D2A',gp:'crm'},
+  'Google - Total':       {ic:'G', cl:'#4285F4',gp:'perf',pr:null},
+  'Google - PMAX':        {ic:'P', cl:'#34A853',gp:'perf',pr:'Google - Total'},
+  'Google - UACi':        {ic:'Ui',cl:'#FBBC05',gp:'perf',pr:'Google - Total'},
+  'Google - UACe':        {ic:'Ue',cl:'#EA4335',gp:'perf',pr:'Google - Total'},
+  'Google - Search':      {ic:'S', cl:'#4285F4',gp:'perf',pr:'Google - Total'},
+  'Facebook - Total':     {ic:'f', cl:'#1877F2',gp:'perf',pr:null},
+  'Facebook - catalog':   {ic:'fc',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
+  'Facebook -conversion': {ic:'fv',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
+  'Criteo':               {ic:'Cr',cl:'#F48120',gp:'perf',pr:null},
+  'Affiliates':           {ic:'🤝',cl:'#0891B2',gp:'aff'},
+  'CC (INBOUND)':         {ic:'📥',cl:'#10B981',gp:'cc'},
+  'CC (OUTBOUND)':        {ic:'📤',cl:'#D4940A',gp:'cc'},
+  'CC (BC2V)':            {ic:'🔄',cl:'#7C5CFC',gp:'cc'},
+  'CC(BI2BC)':            {ic:'🎯',cl:'#E5364B',gp:'cc'},
+};
+const GP = {core:'Overall Metrics',acq:'Acquisition Channels',crm:'CRM & Calling',perf:'Performance Marketing',aff:'Affiliates',cc:'Call Centre'};
+const TABS = ['all','core','acq','crm','perf','aff','cc'];
+const TAB_LBL = {all:'All Channels',core:'Overall',acq:'Classified · ATM · GMB',crm:'CRM & Calling',perf:'Perf. Marketing',aff:'Affiliates',cc:'Call Centre'};
+
+// Rate-type metrics
+const RATE_KW = ['l2bc','l2v','bc2v','us bc2v','td denied','checkin denied','d0 uninstall','ctr','c2l%','connected%','click2bc','cpc','cpi','cpbc','lead per listing','events per session'];
+const isRate = m => RATE_KW.some(k => m.toLowerCase().includes(k));
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let WB = null; // Current workbook
+let CITY_DATA = {}; // {cityName: {meta, data}}
+let activeCity = '';
+let activeTab = 'all';
+let collapsed = new Set();
+
+// ═══════════════════════════════════════════
+// FORMATTERS
+// ═══════════════════════════════════════════
+function fv(v,m){
+  if(v===null||v===undefined)return'<span class="na">—</span>';
+  const n=parseFloat(v);if(isNaN(n))return'<span class="na">—</span>';
+  const r=isRate(m);
+  if(r&&Math.abs(n)<2)return(n*100).toFixed(1)+'%';
+  if(r)return n.toFixed(1)+'%';
+  if(m.toLowerCase().includes('spend'))return'₹'+n.toLocaleString('en-IN',{maximumFractionDigits:0});
+  if(Math.abs(n)>=100000)return(n/100000).toFixed(2)+'L';
+  if(Math.abs(n)>=1000)return n.toLocaleString('en-IN',{maximumFractionDigits:0});
+  if(Number.isInteger(n))return n.toLocaleString('en-IN');
+  if(Math.abs(n)<0.01&&Math.abs(n)>0)return(n*100).toFixed(2)+'%';
+  if(Math.abs(n)<1)return n.toFixed(4);
+  return n.toFixed(1);
+}
+function fach(v){
+  if(v===null||v===undefined)return'<span class="na">—</span>';
+  const n=parseFloat(v);
+  if(isNaN(n)||n===0)return'<span class="na">—</span>';
+  if(Math.abs(n)>5)return n>=1000?n.toLocaleString('en-IN',{maximumFractionDigits:0}):n.toFixed(1);
+  const p=(n*100).toFixed(1)+'%';
+  return n>=1?`<span class="pill pill-up">▲ ${p}</span>`:`<span class="pill pill-dn">▼ ${p}</span>`;
+}
+
+// ═══════════════════════════════════════════
+// PARSE
+// ═══════════════════════════════════════════
+function parseWorkbook(wb){
+  WB = wb;
+  CITY_DATA = {};
+  const sel = document.getElementById('citySelect');
+  sel.innerHTML = '<option value="">Select City</option>';
+
+  // Find city tabs — match known cities OR any tab with data
+  const found = [];
+  for(const name of wb.SheetNames){
+    const nm = name.trim();
+    // Check if it matches a known city or contains city-like data
+    const isCity = CITIES.some(c => nm.toLowerCase().includes(c.toLowerCase().split(' ')[0])) 
+      || nm === 'Sheet1'; // Template fallback
+    if(isCity || tryParseSheet(wb.Sheets[nm])){
+      const parsed = parseOneSheet(wb.Sheets[nm]);
+      if(parsed.data.length > 0){
+        const label = nm === 'Sheet1' ? 'Template' : nm;
+        CITY_DATA[label] = parsed;
+        found.push(label);
+      }
+    }
+  }
+
+  // Also try all sheets if no known cities found
+  if(!found.length){
+    for(const name of wb.SheetNames){
+      const parsed = parseOneSheet(wb.Sheets[name]);
+      if(parsed.data.length > 0){
+        CITY_DATA[name] = parsed;
+        found.push(name);
+      }
+    }
+  }
+
+  // Populate dropdown
+  for(const c of found){
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  }
+
+  // Also add placeholder cities not yet in file
+  for(const c of CITIES){
+    if(!found.some(f => f.toLowerCase().includes(c.toLowerCase().split(' ')[0]))){
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c + ' (no data)'; opt.disabled = true;
+      sel.appendChild(opt);
+    }
+  }
+
+  if(found.length){
+    activeCity = found[0];
+    sel.value = activeCity;
+    render();
+    showToast('✓ Loaded — ' + found.length + ' city tab' + (found.length>1?'s':''));
+  } else {
+    showToast('No valid city tabs found');
+  }
+}
+
+function tryParseSheet(ws){
+  if(!ws) return false;
+  const r = XLSX.utils.sheet_to_json(ws,{header:1,defval:null,range:0});
+  return r.length > 5;
+}
+
+function parseOneSheet(ws){
+  const rows = XLSX.utils.sheet_to_json(ws,{header:1,defval:null});
+  const data=[]; let cur=null;
+  let meta = {date:'',day:''};
+
+  // Find header row — look for "METRIC" or "Sub metrics"
+  let hdrRow = 1;
+  for(let i=0;i<Math.min(5,rows.length);i++){
+    const r=rows[i];
+    if(r && r.some(c => c && String(c).trim()==='Sub metrics')){hdrRow=i;break}
+  }
+
+  // Try to get date from row before header
+  if(hdrRow > 0){
+    const r0 = rows[hdrRow-1];
+    if(r0){
+      for(let j=10;j<r0.length;j++){
+        const v=r0[j];
+        if(v && /\d{4}/.test(String(v))){
+          meta.date = String(v).substring(0,10); break;
+        }
+      }
+      // Day name
+      for(let j=10;j<r0.length;j++){
+        const v=r0[j];
+        if(v && /day$/i.test(String(v).trim())){
+          meta.day = String(v).trim(); break;
+        }
+      }
+    }
+  }
+
+  // Also check row 0 col 0 for city name
+  const cityCell = rows[hdrRow-1] && rows[hdrRow-1][0];
+
+  for(let i=hdrRow+1;i<rows.length;i++){
+    const r=rows[i]; if(!r)continue;
+    if(r[0]!==null&&r[0]!==undefined&&String(r[0]).trim())cur=String(r[0]).trim();
+    if(!r[1])continue;
+    const cl=v=>{if(v===null||v===undefined)return null;if(typeof v==='string'){const s=v.trim();if(!s||s==='-'||s.startsWith('#'))return null;const n=Number(s);return isNaN(n)?null:n}return typeof v==='number'?v:null};
+    data.push({s:cur,m:String(r[1]).trim(),st:cl(r[2]),snt:cl(r[3]),wt:cl(r[4]),d1:cl(r[5]),da:cl(r[6]),lmtd:cl(r[7]),lm:cl(r[8]),mtd:cl(r[9]),mvl:cl(r[10]),mt:cl(r[11]),proj:cl(r[12]),ma:cl(r[13]),l7:cl(r[14]),ll7:cl(r[15]),wt2:cl(r[16]),wa:cl(r[17])});
+  }
+  return {meta, data};
+}
+
+function switchCity(c){
+  if(!c || !CITY_DATA[c])return;
+  activeCity = c;
+  render();
+}
+
+// ═══════════════════════════════════════════
+// ALERTS
+// ═══════════════════════════════════════════
+function buildAlerts(data, meta){
+  const alerts=[];
+  for(const r of data){
+    let dayT=r.wt;
+    if(meta.day){const dl=meta.day.toLowerCase();if(dl==='saturday')dayT=r.st;else if(dl==='sunday')dayT=r.snt}
+    if(r.da!==null&&r.da!==0&&r.da<1)
+      alerts.push({section:r.s,metric:r.m,period:'Daily',ach:r.da,actual:r.d1,target:dayT,priority:r.da<.7?'crit':'warn'});
+    if(r.ma!==null&&r.ma!==0&&r.ma<1&&r.ma>.01)
+      alerts.push({section:r.s,metric:r.m,period:'Monthly',ach:r.ma,actual:r.mtd,target:r.mt,priority:r.ma<.7?'crit':'warn'});
+    if(r.wa!==null&&r.wa!==0&&r.wa<1&&r.wa>.01)
+      alerts.push({section:r.s,metric:r.m,period:'Weekly',ach:r.wa,actual:r.l7,target:r.wt2,priority:r.wa<.7?'crit':'warn'});
+  }
+  alerts.sort((a,b)=>a.priority!==b.priority?(a.priority==='crit'?-1:1):a.ach-b.ach);
+  return alerts;
+}
+
+function renderAlerts(data, meta){
+  const el=document.getElementById('alertsPanel');
+  const alerts=buildAlerts(data, meta);
+  const cc=alerts.filter(a=>a.priority==='crit').length;
+  const wc=alerts.filter(a=>a.priority==='warn').length;
+  let h=`<div class="ap-title">⚠️ Alerts <span class="ap-count ${alerts.length?'red':'grn'}">${alerts.length}</span></div>`;
+  h+=`<div class="ap-sub">${cc} critical · ${wc} warning</div>`;
+  if(!alerts.length){h+='<div class="ap-empty">All metrics on track ✓</div>';el.innerHTML=h;return}
+  for(const period of ['Daily','Monthly','Weekly']){
+    const items=alerts.filter(a=>a.period===period);
+    if(!items.length)continue;
+    h+=`<div class="ap-section"><div class="ap-section-title">${period} (${items.length})</div>`;
+    for(const a of items){
+      const pv=(a.ach*100).toFixed(0);
+      h+=`<div class="alert-item ${a.priority==='crit'?'alert-crit':'alert-warn'}">
+        <div class="al-top"><span class="al-metric">${a.metric}</span><span class="al-pct ${a.priority==='crit'?'red':'yel'}">${pv}%</span></div>
+        <div class="al-detail">Actual: ${fv(a.actual,a.metric)} · Target: ${fv(a.target,a.metric)}</div>
+        <div class="al-channel">${a.section}</div>
+      </div>`;
+    }
+    h+='</div>';
+  }
+  el.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function render(){
+  const cd = CITY_DATA[activeCity];
+  if(!cd)return;
+  const {meta, data} = cd;
+
+  // Update title
+  document.querySelector('.tb-title').textContent = 'Control Tower · ' + activeCity;
+
+  // Date
+  const db=document.getElementById('dateBadge');
+  if(meta.date){
+    const d=new Date(meta.date);
+    db.innerHTML='<b>'+(meta.day||'')+'</b> · '+d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  }else db.innerHTML='<b>Template</b>';
+
+  renderTabs();
+  renderSections(data, meta);
+  renderAlerts(data, meta);
+}
+
+function renderTabs(){
+  const el=document.getElementById('navTabs');
+  let h='';for(const t of TABS)h+=`<button class="nav-tab ${activeTab===t?'active':''}" onclick="activeTab='${t}';renderTabs();renderSections(CITY_DATA[activeCity].data,CITY_DATA[activeCity].meta)">${TAB_LBL[t]}</button>`;
+  el.innerHTML=h;
+}
+
+function renderSections(data, meta){
+  const wrap=document.getElementById('sectionsWrap');
+  // Group by section, preserve order from data
+  const secs={},order=[];
+  for(const d of data){if(!secs[d.s]){secs[d.s]=[];order.push(d.s)}secs[d.s].push(d)}
+
+  // Filter by tab
+  const visible=order.filter(s=>{
+    if(activeTab==='all')return true;
+    const cfg=SEC_CFG[s];
+    return cfg&&cfg.gp===activeTab;
+  });
+
+  let h='',lastGp=null;
+  for(const sec of visible){
+    const cfg=SEC_CFG[sec]||{ic:'•',cl:'#999',gp:'other'};
+    const isSub=cfg.pr!==undefined&&cfg.pr!==null;
+    if(activeTab==='all'&&cfg.gp!==lastGp&&!isSub){lastGp=cfg.gp;h+=`<div class="group-label">${GP[cfg.gp]||cfg.gp}</div>`}
+    h+=buildCard(sec,secs[sec],cfg,isSub,meta);
+  }
+  wrap.innerHTML=h;
+}
+
+function buildCard(sec,rows,cfg,isSub,meta){
+  const ic=collapsed.has(sec);
+  const has=rows.some(r=>r.d1!==null||r.mtd!==null||r.l7!==null||r.lmtd!==null);
+  let h=`<div class="sec-card ${isSub?'sub-card':''}">
+    <div class="sec-hdr" onclick="tog('${sec}')">
+      <div class="sec-name"><div class="sec-icon" style="background:${cfg.cl}">${cfg.ic.length<=2?cfg.ic:''}</div>${sec}${!has?'<span class="sec-badge">No data</span>':''}</div>
+      <div class="sec-toggle ${ic?'c':''}">▾</div>
+    </div>
+    <div class="sec-body ${ic?'c':''}"><table class="ct"><thead>
+      <tr><th rowspan="2"></th>
+        <th class="tg tg-y dv-y" colspan="3">YESTERDAY</th>
+        <th class="tg tg-m dv-m" colspan="5">MONTHLY</th>
+        <th class="tg tg-w" colspan="3">WEEKLY</th></tr>
+      <tr class="sub-th">
+        <th>Target</th><th>D-1</th><th class="dv-y">Ach %</th>
+        <th>LMTD</th><th>MTD</th><th>MTD/LMTD</th><th>Target</th><th class="dv-m">Ach %</th>
+        <th>L7D</th><th>LL7D</th><th>Ach %</th></tr>
+    </thead><tbody>`;
+  if(!has){h+='<tr class="empty-row"><td colspan="12">Awaiting data</td></tr>';}
+  else{for(const r of rows){
+    let dt=r.wt;
+    if(meta.day){const dl=meta.day.toLowerCase();if(dl==='saturday')dt=r.st;else if(dl==='sunday')dt=r.snt}
+    h+=`<tr><td>${r.m}</td>
+      <td>${fv(dt,r.m)}</td><td>${fv(r.d1,r.m)}</td><td class="dv-y">${fach(r.da)}</td>
+      <td>${fv(r.lmtd,r.m)}</td><td>${fv(r.mtd,r.m)}</td><td>${fach(r.mvl)}</td><td>${fv(r.mt,r.m)}</td><td class="dv-m">${fach(r.ma)}</td>
+      <td>${fv(r.l7,r.m)}</td><td>${fv(r.ll7,r.m)}</td><td>${fach(r.wa)}</td></tr>`;
+  }}
+  h+='</tbody></table></div></div>';
+  return h;
+}
+
+function tog(s){collapsed.has(s)?collapsed.delete(s):collapsed.add(s);
+  const cd=CITY_DATA[activeCity];if(cd)renderSections(cd.data,cd.meta)}
+
+// ═══════════════════════════════════════════
+// TOAST + FILE
+// ═══════════════════════════════════════════
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
+
+document.getElementById('fileInput').addEventListener('change',function(e){
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){try{const d=new Uint8Array(ev.target.result);const wb=XLSX.read(d,{type:'array',cellDates:true});parseWorkbook(wb)}catch(err){showToast('Error: '+err.message)}};
+  reader.readAsArrayBuffer(f);this.value='';
+});
+
+// ═══════════════════════════════════════════
+// INITIAL LOAD
+// ═══════════════════════════════════════════
+(function(){
+  // Build empty dropdown with all cities
+  const sel = document.getElementById('citySelect');
+  for(const c of CITIES){
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c; opt.disabled = true;
+    sel.appendChild(opt);
+  }
+
+  // If we have embedded data, load it
+  try {
+    const INIT = {"meta": {"date": "2026-04-05", "day": "Sunday"}, "data": [{"s": "Overall", "m": "Listings", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 2018.0, "da": null, "lmtd": 5909.0, "lm": null, "mtd": 9519.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Visits", "st": 150.64898360160208, "snt": 237.603008721135, "wt": 108.61109087968411, "d1": 298.0, "da": 1.254192872, "lmtd": 668.0, "lm": 4492.0, "mtd": 970.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Unique Check ins", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Uni sch bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 930.0, "da": 1.245775471, "lmtd": 1720.0, "lm": null, "mtd": 2830.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "US BC2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "TD Denied %", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Checkin denied %", "st": null, "snt": null, "wt": null, "d1": 0.006, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 0.017, "ll7": 0.024, "wt2": null, "wa": null}, {"s": "Overall", "m": "App installs", "st": null, "snt": null, "wt": null, "d1": 2960.0, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 17202.0, "ll7": 17787.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "D0 Uninstall %", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Sessions", "st": null, "snt": null, "wt": null, "d1": 137497.0, "da": null, "lmtd": 395191.0, "lm": null, "mtd": 550034.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 743780.0, "ll7": 748364.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "Events per session", "st": null, "snt": null, "wt": null, "d1": 74.2, "da": null, "lmtd": 83.62, "lm": null, "mtd": 80.31, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 80.94, "ll7": 68.0, "wt2": null, "wa": null}, {"s": "CLASSIFIED", "m": "Listings", "st": 546.0, "snt": 582.0, "wt": 582.0, "d1": 754.0, "da": 1.295532646, "lmtd": 662.0, "lm": 662.0, "mtd": 774.0, "mvl": 582.0, "mt": 582.0, "proj": null, "ma": 0.0, "l7": null, "ll7": null, "wt2": 404.0, "wa": 0.0}, {"s": "CLASSIFIED", "m": "Leads", "st": 161.0, "snt": 174.0, "wt": 710.0, "d1": 174.0, "da": 1.080745342, "lmtd": 661.0, "lm": 3653.0, "mtd": 765.0, "mvl": 1693.0, "mt": 4443.0, "proj": 4590.0, "ma": 1.033085753, "l7": 1045.0, "ll7": 1005.0, "wt2": 1005.0, "wa": 1.039800995}, {"s": "CLASSIFIED", "m": "Lead per listing", "st": 0.2948717949, "snt": 0.2989690722, "wt": 1.219931271, "d1": 0.2307692308, "da": 0.7826086957, "lmtd": 0.998489426, "lm": 5.518126888, "mtd": 0.988372093, "mvl": 2.908934708, "mt": 7.634020619, "proj": 5.930232558, "ma": 0.7768164188, "l7": null, "ll7": null, "wt2": 2.487623762, "wa": 0.0}, {"s": "CLASSIFIED", "m": "Visits", "st": 4.0, "snt": 6.0, "wt": 25.0, "d1": 6.0, "da": 1.5, "lmtd": 30.0, "lm": 187.0, "mtd": 37.0, "mvl": 84.66666667, "mt": 187.0, "proj": 222.0, "ma": 1.187165775, "l7": 52.0, "ll7": 38.0, "wt2": 38.0, "wa": 1.368421053}, {"s": "CLASSIFIED", "m": "L2BC", "st": 0.0976, "snt": 0.1111, "wt": 235.0, "d1": 54.0, "da": 0.229787234, "lmtd": 0.26, "lm": 0.26006022447303584, "mtd": 0.3, "mvl": 0.2733534082, "mt": 0.1968421053, "proj": 1.8, "ma": 9.144385027, "l7": 0.034, "ll7": 0.23582089552238805, "wt2": 0.23582089552238805, "wa": 0.1441772152}, {"s": "CLASSIFIED", "m": "L2V", "st": 0.0248447205, "snt": 0.03448275862, "wt": 0.03521126761, "d1": 0.03448275862, "da": 1.387931034, "lmtd": 0.04538577912, "lm": 0.05119080208, "mtd": 0.04836601307, "mvl": 0.04831419809, "mt": 0.04929033775, "proj": 0.2901960784, "ma": 5.887484073, "l7": 0.04976076555, "ll7": 0.03781094527, "wt2": 0.03781094527, "wa": 1.316041299}, {"s": "ATM", "m": "Videos Live", "st": 4.0, "snt": 4.0, "wt": 2.0, "d1": 1.0, "da": 0.25, "lmtd": 5.0, "lm": 39.0, "mtd": 6.0, "mvl": 1.2, "mt": 75.0, "proj": 36.0, "ma": 0.48, "l7": 3.0, "ll7": 8.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "Leads", "st": 200.0, "snt": 220.0, "wt": 190.0, "d1": 241.0, "da": 1.205, "lmtd": 878.5, "lm": 5971.5, "mtd": 812.0, "mvl": 0.9243027888, "mt": 4727.0, "proj": 4872.0, "ma": 1.030674847, "l7": 1122.0, "ll7": 1063.5, "wt2": null, "wa": null}, {"s": "ATM", "m": "Visits", "st": 4.0, "snt": 24.5, "wt": null, "d1": 5.0, "da": 1.25, "lmtd": 20.0, "lm": 143.0, "mtd": 16.5, "mvl": 0.825, "mt": 150.0, "proj": 99.0, "ma": 0.66, "l7": 25.0, "ll7": 27.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": 0.166, "da": null, "lmtd": 0.147, "lm": 0.155, "mtd": 0.195, "mvl": 1.326530612, "mt": 0.16, "proj": null, "ma": 0.0, "l7": 0.193, "ll7": 0.202, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.01, "da": null, "lmtd": 0.023, "lm": 0.024, "mtd": 0.02, "mvl": 0.8695652174, "mt": 0.025, "proj": null, "ma": 0.0, "l7": 0.022, "ll7": 0.025, "wt2": null, "wa": null}, {"s": "GMB", "m": "Leads", "st": 3100.0, "snt": 3300.0, "wt": 2900.0, "d1": 2884.0, "da": 0.9303225806, "lmtd": 13339.0, "lm": 84482.0, "mtd": 14466.0, "mvl": 1.084489092, "mt": 90000.0, "proj": 86796.0, "ma": 0.9644, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "BC", "st": 480.0, "snt": 530.0, "wt": 380.0, "d1": 591.0, "da": 1.23125, "lmtd": 1601.0, "lm": 12233.0, "mtd": 2555.0, "mvl": 1.595877577, "mt": 12500.0, "proj": 15330.0, "ma": 1.2264, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "Visits", "st": 140.0, "snt": 160.0, "wt": 125.0, "d1": 199.0, "da": 1.421428571, "lmtd": 465.0, "lm": 3315.0, "mtd": 646.0, "mvl": 1.389247312, "mt": 4000.0, "proj": 3876.0, "ma": 0.969, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "L2BC", "st": 0.1548387097, "snt": 0.1606060606, "wt": 0.1310344828, "d1": 0.2049237171, "da": 1.323465673, "lmtd": 0.1200239898, "lm": 0.1448000758, "mtd": 0.1766210424, "mvl": 0.1471483693, "mt": 0.1388888889, "proj": 0.1766210424, "ma": 1.271671506, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "L2V", "st": 0.04516129032, "snt": 0.04848484848, "wt": 0.04310344828, "d1": 0.06900138696, "da": 1.527887854, "lmtd": 0.03486018442, "lm": 0.03923912786, "mtd": 0.04465643578, "mvl": 0.03958524935, "mt": 0.04444444444, "proj": 0.04465643578, "ma": 1.004769805, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "Delivered", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "CTR", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "Calls Connected", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "C2L%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Installs", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPI", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "Leads", "st": 6186.0, "snt": 6568.0, "wt": 5668.0, "d1": 266.6666667, "da": 0.04310809354, "lmtd": 39744.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "BC", "st": 302.0, "snt": 367.0, "wt": 291.0, "d1": null, "da": 0.0, "lmtd": 649.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "Visits", "st": 83.0, "snt": 87.0, "wt": 60.0, "d1": null, "da": 0.0, "lmtd": 147.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "L2BC", "st": 0.04881991594, "snt": 0.05587697929, "wt": 0.05134086097, "d1": null, "da": 0.0, "lmtd": 0.01632950886, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "L2V", "st": 0.01341739412, "snt": 0.01324604141, "wt": 0.01058574453, "d1": null, "da": 0.0, "lmtd": 0.003698671498, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": 337.0, "da": null, "lmtd": 664.0, "lm": 4403.0, "mtd": 1388.0, "mvl": 2.090361446, "mt": null, "proj": null, "ma": null, "l7": 1621.0, "ll7": 1001.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": 27.0, "da": null, "lmtd": 79.0, "lm": 399.0, "mtd": 96.0, "mvl": 1.215189873, "mt": null, "proj": null, "ma": null, "l7": 117.0, "ll7": 90.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.08011869436, "da": null, "lmtd": 0.1189759036, "lm": 0.0906200318, "mtd": 0.06916426513, "mvl": 0.5813300259, "mt": null, "proj": null, "ma": null, "l7": 0.07217766811, "ll7": 0.08991008991, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": 139.0, "da": null, "lmtd": 683.0, "lm": 3943.0, "mtd": 549.0, "mvl": 0.803806735, "mt": null, "proj": null, "ma": null, "l7": 758.0, "ll7": 981.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": 3.0, "da": null, "lmtd": 19.0, "lm": 138.0, "mtd": 29.0, "mvl": 1.526315789, "mt": null, "proj": null, "ma": null, "l7": 39.0, "ll7": 33.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.02158273381, "da": null, "lmtd": 0.02781844802, "lm": 0.03499873193, "mtd": 0.05282331512, "mvl": 1.89885917, "mt": null, "proj": null, "ma": null, "l7": 0.05145118734, "ll7": 0.03363914373, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}]};
+    if(INIT && INIT.data && INIT.data.length){
+      CITY_DATA['Mumbai'] = INIT;
+      const opt = sel.querySelector('option[value="Mumbai"]');
+      if(opt){opt.disabled = false; opt.textContent = 'Mumbai';}
+      activeCity = 'Mumbai';
+      sel.value = 'Mumbai';
+      render();
+    }
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
