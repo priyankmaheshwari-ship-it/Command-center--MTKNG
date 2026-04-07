@@ -17,56 +17,45 @@
   --c-red:#E5364B;--c-red-bg:rgba(229,54,75,.08);
   --c-yellow:#D4940A;--c-yellow-bg:rgba(212,148,10,.08);
   --c-blue:#2B7AE0;--c-blue-bg:rgba(43,122,224,.07);
-  --shadow:0 1px 3px rgba(0,0,0,.06);
-  --shadow-md:0 2px 8px rgba(0,0,0,.08);
+  --shadow:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 2px 8px rgba(0,0,0,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--c-bg);color:var(--c-txt);min-height:100vh}
 
-/* ── TOPBAR ── */
 .topbar{background:var(--c-white);border-bottom:1px solid var(--c-bdr);padding:10px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
 .tb-left{display:flex;align-items:center;gap:12px}
-.logo{font-size:20px;font-weight:700;letter-spacing:-.5px;color:var(--c-txt)}.logo span{color:var(--c-orange)}
+.logo{font-size:20px;font-weight:700;letter-spacing:-.5px}.logo span{color:var(--c-orange)}
 .tb-div{width:1px;height:20px;background:var(--c-bdr)}
 .tb-title{font-size:12px;font-weight:600;color:var(--c-muted);letter-spacing:.6px;text-transform:uppercase}
-.tb-right{display:flex;align-items:center;gap:10px}
+.tb-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sel{appearance:none;background:var(--c-bg2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A5A72' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;border:1px solid var(--c-bdr);border-radius:7px;padding:6px 28px 6px 11px;font-size:12px;font-weight:600;color:var(--c-txt);cursor:pointer;font-family:inherit;transition:.15s}
+.sel:hover{border-color:var(--c-orange)}.sel:focus{outline:none;border-color:var(--c-orange);box-shadow:0 0 0 3px var(--c-orange-bg)}
+.date-pill{background:var(--c-bg2);border:1px solid var(--c-bdr);border-radius:7px;padding:5px 11px;font-size:11px;color:var(--c-dim);font-weight:500}.date-pill b{color:var(--c-txt)}
+.btn{border:0;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:.15s}
+.btn-primary{background:var(--c-orange);color:#fff;box-shadow:0 1px 4px rgba(240,90,40,.25)}.btn-primary:hover{background:var(--c-orange-l);transform:translateY(-1px)}
+.btn-ai{background:linear-gradient(135deg,#7C5CFC,#A855F7);color:#fff;box-shadow:0 1px 4px rgba(124,92,252,.25)}.btn-ai:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn svg{width:14px;height:14px}
+#fileInput,#fileInputAI{display:none}
 
-/* City dropdown */
-.city-select{appearance:none;background:var(--c-bg2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A5A72' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;border:1px solid var(--c-bdr);border-radius:7px;padding:6px 30px 6px 12px;font-size:13px;font-weight:600;color:var(--c-txt);cursor:pointer;font-family:inherit;transition:.15s}
-.city-select:hover{border-color:var(--c-orange)}
-.city-select:focus{outline:none;border-color:var(--c-orange);box-shadow:0 0 0 3px var(--c-orange-bg)}
-
-.date-pill{background:var(--c-bg2);border:1px solid var(--c-bdr);border-radius:7px;padding:5px 12px;font-size:11px;color:var(--c-dim);font-weight:500}
-.date-pill b{color:var(--c-txt)}
-.up-btn{background:var(--c-orange);color:#fff;border:0;border-radius:7px;padding:7px 15px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:.15s;box-shadow:0 1px 4px rgba(240,90,40,.25)}
-.up-btn:hover{background:var(--c-orange-l);transform:translateY(-1px)}
-.up-btn svg{width:14px;height:14px}
-#fileInput{display:none}
-
-/* ── LAYOUT ── */
 .layout{display:flex;gap:0;min-height:calc(100vh - 48px)}
 .main{flex:1;min-width:0;padding:16px 20px 40px;overflow-y:auto}
 .alerts-panel{width:310px;min-width:310px;background:var(--c-white);border-left:1px solid var(--c-bdr);padding:14px;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;box-shadow:-2px 0 8px rgba(0,0,0,.03)}
 
-/* ── TABS ── */
 .nav-tabs{display:flex;gap:2px;border-bottom:1px solid var(--c-bdr);margin-bottom:14px;overflow-x:auto}
 .nav-tab{padding:8px 13px;font-size:12px;font-weight:500;color:var(--c-dim);cursor:pointer;border:0;border-bottom:2px solid transparent;background:0;font-family:inherit;white-space:nowrap;transition:.15s}
 .nav-tab:hover{color:var(--c-txt)}.nav-tab.active{color:var(--c-orange);border-bottom-color:var(--c-orange);font-weight:600}
 
-/* ── SECTION CARD ── */
 .group-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:1.3px;padding:14px 2px 5px}
 .sec-card{background:var(--c-card);border:1px solid var(--c-bdr);border-radius:10px;overflow:hidden;margin-bottom:10px;box-shadow:var(--shadow);transition:box-shadow .15s}
 .sec-card:hover{box-shadow:var(--shadow-md)}
 .sec-card.sub-card{margin-left:24px;border-left:3px solid var(--c-bdr2);border-radius:0 10px 10px 0;box-shadow:none}
 .sec-hdr{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--c-bdr);cursor:pointer;user-select:none;background:var(--c-card2)}
-.sec-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--c-txt)}
+.sec-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
 .sec-icon{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
 .sec-badge{font-size:10px;color:var(--c-muted);font-weight:400;margin-left:6px}
-.sec-toggle{font-size:15px;color:var(--c-muted);transition:transform .2s}
-.sec-toggle.c{transform:rotate(-90deg)}
+.sec-toggle{font-size:15px;color:var(--c-muted);transition:transform .2s}.sec-toggle.c{transform:rotate(-90deg)}
 .sec-body{padding:0}.sec-body.c{display:none}
 
-/* ── TABLE ── */
 .ct{width:100%;border-collapse:collapse;font-size:12px}
 .ct thead th{padding:5px 10px;text-align:right;font-weight:600;font-size:10px;color:var(--c-muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;background:var(--c-card2)}
 .ct thead th:first-child{text-align:left}
@@ -74,44 +63,47 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--c-bg);color:var
 .ct .tg-y{color:var(--c-orange);background:var(--c-orange-bg);border-bottom:2px solid rgba(240,90,40,.2)}
 .ct .tg-m{color:var(--c-blue);background:var(--c-blue-bg);border-bottom:2px solid rgba(43,122,224,.15)}
 .ct .tg-w{color:var(--c-green);background:var(--c-green-bg);border-bottom:2px solid rgba(15,175,110,.15)}
-
-/* Period dividers */
-.ct .dv-y{border-right:2px solid rgba(240,90,40,.2)}
-.ct .dv-m{border-right:2px solid rgba(43,122,224,.15)}
-
-.ct thead .sub-th{border-bottom:1px solid var(--c-bdr)}
+.ct .dv-y{border-right:2px solid rgba(240,90,40,.2)}.ct .dv-m{border-right:2px solid rgba(43,122,224,.15)}
 .ct tbody td{padding:6px 10px;text-align:right;border-bottom:1px solid var(--c-bg2);font-variant-numeric:tabular-nums;color:var(--c-txt);white-space:nowrap}
 .ct tbody td:first-child{text-align:left;font-weight:500;color:var(--c-dim);min-width:115px}
 .ct tbody tr:hover td{background:rgba(240,90,40,.025)}
 .ct tbody tr:last-child td{border-bottom:0}
 .na{color:var(--c-muted);font-style:italic;font-size:11px}
 .pill{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:3px}
-.pill-up{background:var(--c-green-bg);color:var(--c-green)}
-.pill-dn{background:var(--c-red-bg);color:var(--c-red)}
+.pill-up{background:var(--c-green-bg);color:var(--c-green)}.pill-dn{background:var(--c-red-bg);color:var(--c-red)}
 .empty-row td{text-align:center!important;color:var(--c-muted)!important;padding:14px!important;font-style:italic}
 
-/* ── ALERTS ── */
-.ap-title{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:7px;color:var(--c-txt)}
+.ap-title{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:7px}
 .ap-sub{font-size:11px;color:var(--c-muted);margin-bottom:12px}
 .ap-section{margin-bottom:14px}
 .ap-section-title{font-size:10px;font-weight:700;color:var(--c-dim);text-transform:uppercase;letter-spacing:.8px;padding:5px 0 3px;border-bottom:1px solid var(--c-bdr);margin-bottom:5px}
 .alert-item{padding:7px 9px;border-radius:7px;margin-bottom:5px;font-size:11px;border-left:3px solid;transition:background .1s}
 .alert-item:hover{filter:brightness(.97)}
-.alert-crit{border-color:var(--c-red);background:var(--c-red-bg)}
-.alert-warn{border-color:var(--c-yellow);background:var(--c-yellow-bg)}
+.alert-crit{border-color:var(--c-red);background:var(--c-red-bg)}.alert-warn{border-color:var(--c-yellow);background:var(--c-yellow-bg)}
 .al-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1px}
 .al-metric{font-weight:600;color:var(--c-txt);font-size:12px}
 .al-pct{font-weight:700;font-size:11px}.al-pct.red{color:var(--c-red)}.al-pct.yel{color:var(--c-yellow)}
-.al-detail{font-size:10px;color:var(--c-dim)}
-.al-channel{font-size:10px;color:var(--c-muted);margin-top:1px}
+.al-detail{font-size:10px;color:var(--c-dim)}.al-channel{font-size:10px;color:var(--c-muted);margin-top:1px}
 .ap-empty{font-size:12px;color:var(--c-muted);text-align:center;padding:28px 10px;font-style:italic}
 .ap-count{font-size:10px;padding:1px 7px;border-radius:10px;font-weight:700}
-.ap-count.red{background:var(--c-red-bg);color:var(--c-red)}
-.ap-count.grn{background:var(--c-green-bg);color:var(--c-green)}
+.ap-count.red{background:var(--c-red-bg);color:var(--c-red)}.ap-count.grn{background:var(--c-green-bg);color:var(--c-green)}
 
-/* ── TOAST ── */
+/* AI modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:300;display:none;align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--c-white);border-radius:14px;padding:24px;width:520px;max-width:92vw;max-height:80vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.15)}
+.modal h3{font-size:16px;margin-bottom:4px}.modal .msub{font-size:12px;color:var(--c-dim);margin-bottom:14px}
+.modal textarea{width:100%;min-height:100px;border:1px solid var(--c-bdr);border-radius:8px;padding:10px;font-family:inherit;font-size:12px;resize:vertical;margin-bottom:10px}
+.modal textarea:focus{outline:none;border-color:var(--c-orange)}
+.modal .mfoot{display:flex;justify-content:flex-end;gap:8px}
+.modal .mfoot .btn{padding:8px 18px}
+.btn-ghost{background:var(--c-bg2);color:var(--c-dim)}.btn-ghost:hover{background:var(--c-bdr)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--c-green);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 6px 24px rgba(15,175,110,.3);opacity:0;transition:.4s cubic-bezier(.34,1.56,.64,1);z-index:200}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{background:var(--c-red)}
 
 @media(max-width:1100px){.alerts-panel{width:260px;min-width:260px}}
 @media(max-width:900px){.layout{flex-direction:column}.alerts-panel{width:100%;min-width:0;position:static;height:auto;border-left:0;border-top:1px solid var(--c-bdr)}}
@@ -123,17 +115,20 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--c-bg);color:var
   <div class="tb-left">
     <div class="logo">CARS<span>24</span></div>
     <div class="tb-div"></div>
-    <div class="tb-title">Control Tower</div>
+    <div class="tb-title" id="tbTitle">Control Tower</div>
   </div>
   <div class="tb-right">
-    <select class="city-select" id="citySelect" onchange="switchCity(this.value)">
-      <option value="">Select City</option>
-    </select>
-    <div class="date-pill" id="dateBadge"><b>—</b></div>
+    <select class="sel" id="citySelect" onchange="switchCity(this.value)"><option value="">Select City</option></select>
+    <select class="sel" id="dateSelect" onchange="switchDate(this.value)" style="min-width:140px"><option value="">Date</option></select>
     <input type="file" id="fileInput" accept=".xlsx,.xls">
-    <button class="up-btn" onclick="document.getElementById('fileInput').click()">
+    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Refresh Data
+      Upload Sheet
+    </button>
+    <input type="file" id="fileInputAI" accept=".xlsx,.xls,.csv,.png,.jpg,.jpeg">
+    <button class="btn btn-ai" onclick="document.getElementById('fileInputAI').click()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4a2 2 0 01-2-2 4 4 0 014-4z"/><path d="M8 8v8a4 4 0 004 4 4 4 0 004-4V8"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+      AI Parse
     </button>
   </div>
 </div>
@@ -146,66 +141,67 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--c-bg);color:var
   <div class="alerts-panel" id="alertsPanel"></div>
 </div>
 
+<!-- AI Modal -->
+<div class="modal-bg" id="aiModal">
+  <div class="modal">
+    <h3>AI-Powered Data Inference</h3>
+    <div class="msub">Claude will read your file, map columns to Control Tower metrics, and refresh numbers automatically.</div>
+    <div id="aiStatus" style="font-size:12px;color:var(--c-dim);margin-bottom:10px"></div>
+    <textarea id="aiContext" placeholder="Optional: add context to help Claude (e.g. 'This is a Google Ads export for Mumbai, columns are Date/Campaign/Clicks/Cost/Conversions')"></textarea>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeAI()">Cancel</button>
+      <button class="btn btn-ai" id="aiRunBtn" onclick="runAI()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4a2 2 0 01-2-2 4 4 0 014-4z"/><path d="M8 8v8a4 4 0 004 4 4 4 0 004-4V8"/></svg>
+        Run Inference
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════
-// CITIES
-// ═══════════════════════════════════════════
-const CITIES = ['Delhi NCR','Mumbai','Pune','Bangalore','Ahmedabad','Chennai','Hyderabad'];
-
-// ═══════════════════════════════════════════
-// SECTION CONFIG — ordering, icons, grouping, nesting
-// ═══════════════════════════════════════════
-const SEC_CFG = {
-  'Overall':              {ic:'📊',cl:'#F05A28',gp:'core'},
-  'CLASSIFIED':           {ic:'📋',cl:'#4576E0',gp:'acq'},
-  'ATM':                  {ic:'🎬',cl:'#D4940A',gp:'acq'},
-  'GMB':                  {ic:'📍',cl:'#0FAF6E',gp:'acq'},
-  'CRM / WA':             {ic:'💬',cl:'#7C5CFC',gp:'crm'},
-  'CRM / Call us':        {ic:'📲',cl:'#A855F7',gp:'crm'},
-  'IVR':                  {ic:'📞',cl:'#E27D2A',gp:'crm'},
-  'Google - Total':       {ic:'G', cl:'#4285F4',gp:'perf',pr:null},
-  'Google - PMAX':        {ic:'P', cl:'#34A853',gp:'perf',pr:'Google - Total'},
-  'Google - UACi':        {ic:'Ui',cl:'#FBBC05',gp:'perf',pr:'Google - Total'},
-  'Google - UACe':        {ic:'Ue',cl:'#EA4335',gp:'perf',pr:'Google - Total'},
-  'Google - Search':      {ic:'S', cl:'#4285F4',gp:'perf',pr:'Google - Total'},
-  'Facebook - Total':     {ic:'f', cl:'#1877F2',gp:'perf',pr:null},
-  'Facebook - catalog':   {ic:'fc',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
-  'Facebook -conversion': {ic:'fv',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
-  'Criteo':               {ic:'Cr',cl:'#F48120',gp:'perf',pr:null},
-  'Affiliates':           {ic:'🤝',cl:'#0891B2',gp:'aff'},
-  'CC (INBOUND)':         {ic:'📥',cl:'#10B981',gp:'cc'},
-  'CC (OUTBOUND)':        {ic:'📤',cl:'#D4940A',gp:'cc'},
-  'CC (BC2V)':            {ic:'🔄',cl:'#7C5CFC',gp:'cc'},
-  'CC(BI2BC)':            {ic:'🎯',cl:'#E5364B',gp:'cc'},
+const CITIES=['Delhi NCR','Mumbai','Pune','Bangalore','Ahmedabad','Chennai','Hyderabad'];
+const SEC_CFG={
+  'Overall':{ic:'📊',cl:'#F05A28',gp:'core'},
+  'CLASSIFIED':{ic:'📋',cl:'#4576E0',gp:'acq'},
+  'ATM':{ic:'🎬',cl:'#D4940A',gp:'acq'},
+  'GMB':{ic:'📍',cl:'#0FAF6E',gp:'acq'},
+  'CRM / WA':{ic:'💬',cl:'#7C5CFC',gp:'crm'},
+  'CRM / Call us':{ic:'📲',cl:'#A855F7',gp:'crm'},
+  'IVR':{ic:'📞',cl:'#E27D2A',gp:'crm'},
+  'Google - Total':{ic:'G',cl:'#4285F4',gp:'perf',pr:null},
+  'Google - PMAX':{ic:'P',cl:'#34A853',gp:'perf',pr:'Google - Total'},
+  'Google - UACi':{ic:'Ui',cl:'#FBBC05',gp:'perf',pr:'Google - Total'},
+  'Google - UACe':{ic:'Ue',cl:'#EA4335',gp:'perf',pr:'Google - Total'},
+  'Google - Search':{ic:'S',cl:'#4285F4',gp:'perf',pr:'Google - Total'},
+  'Facebook - Total':{ic:'f',cl:'#1877F2',gp:'perf',pr:null},
+  'Facebook - catalog':{ic:'fc',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
+  'Facebook -conversion':{ic:'fv',cl:'#1877F2',gp:'perf',pr:'Facebook - Total'},
+  'Criteo':{ic:'Cr',cl:'#F48120',gp:'perf',pr:null},
+  'Affiliates':{ic:'🤝',cl:'#0891B2',gp:'aff'},
+  'CC (INBOUND)':{ic:'📥',cl:'#10B981',gp:'cc'},
+  'CC (OUTBOUND)':{ic:'📤',cl:'#D4940A',gp:'cc'},
+  'CC (BC2V)':{ic:'🔄',cl:'#7C5CFC',gp:'cc'},
+  'CC(BI2BC)':{ic:'🎯',cl:'#E5364B',gp:'cc'},
 };
-const GP = {core:'Overall Metrics',acq:'Acquisition Channels',crm:'CRM & Calling',perf:'Performance Marketing',aff:'Affiliates',cc:'Call Centre'};
-const TABS = ['all','core','acq','crm','perf','aff','cc'];
-const TAB_LBL = {all:'All Channels',core:'Overall',acq:'Classified · ATM · GMB',crm:'CRM & Calling',perf:'Perf. Marketing',aff:'Affiliates',cc:'Call Centre'};
+const GP={core:'Overall Metrics',acq:'Acquisition Channels',crm:'CRM & Calling',perf:'Performance Marketing',aff:'Affiliates',cc:'Call Centre'};
+const TABS=['all','core','acq','crm','perf','aff','cc'];
+const TAB_LBL={all:'All Channels',core:'Overall',acq:'Classified · ATM · GMB',crm:'CRM & Calling',perf:'Perf. Marketing',aff:'Affiliates',cc:'Call Centre'};
+const RATE_KW=['l2bc','l2v','bc2v','us bc2v','td denied','checkin denied','d0 uninstall','ctr','c2l%','connected%','click2bc','cpc','cpi','cpbc','lead per listing','events per session'];
+const isRate=m=>RATE_KW.some(k=>m.toLowerCase().includes(k));
 
-// Rate-type metrics
-const RATE_KW = ['l2bc','l2v','bc2v','us bc2v','td denied','checkin denied','d0 uninstall','ctr','c2l%','connected%','click2bc','cpc','cpi','cpbc','lead per listing','events per session'];
-const isRate = m => RATE_KW.some(k => m.toLowerCase().includes(k));
+// ═══ STATE ═══
+let STORE={};  // {city: {dateKey: {meta, data}}}
+let activeCity='', activeDate='', activeTab='all', collapsed=new Set();
+let aiFile=null;
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-let WB = null; // Current workbook
-let CITY_DATA = {}; // {cityName: {meta, data}}
-let activeCity = '';
-let activeTab = 'all';
-let collapsed = new Set();
-
-// ═══════════════════════════════════════════
-// FORMATTERS
-// ═══════════════════════════════════════════
+// ═══ FORMAT ═══
 function fv(v,m){
-  if(v===null||v===undefined)return'<span class="na">—</span>';
-  const n=parseFloat(v);if(isNaN(n))return'<span class="na">—</span>';
-  const r=isRate(m);
-  if(r&&Math.abs(n)<2)return(n*100).toFixed(1)+'%';
-  if(r)return n.toFixed(1)+'%';
+  if(v==null)return'<span class="na">—</span>';
+  const n=+v;if(isNaN(n))return'<span class="na">—</span>';
+  if(isRate(m)&&Math.abs(n)<2)return(n*100).toFixed(1)+'%';
+  if(isRate(m))return n.toFixed(1)+'%';
   if(m.toLowerCase().includes('spend'))return'₹'+n.toLocaleString('en-IN',{maximumFractionDigits:0});
   if(Math.abs(n)>=100000)return(n/100000).toFixed(2)+'L';
   if(Math.abs(n)>=1000)return n.toLocaleString('en-IN',{maximumFractionDigits:0});
@@ -215,300 +211,299 @@ function fv(v,m){
   return n.toFixed(1);
 }
 function fach(v){
-  if(v===null||v===undefined)return'<span class="na">—</span>';
-  const n=parseFloat(v);
-  if(isNaN(n)||n===0)return'<span class="na">—</span>';
+  if(v==null)return'<span class="na">—</span>';
+  const n=+v;if(isNaN(n)||n===0)return'<span class="na">—</span>';
   if(Math.abs(n)>5)return n>=1000?n.toLocaleString('en-IN',{maximumFractionDigits:0}):n.toFixed(1);
   const p=(n*100).toFixed(1)+'%';
   return n>=1?`<span class="pill pill-up">▲ ${p}</span>`:`<span class="pill pill-dn">▼ ${p}</span>`;
 }
 
-// ═══════════════════════════════════════════
-// PARSE
-// ═══════════════════════════════════════════
+// ═══ SMART PARSER — auto-detects column layout ═══
 function parseWorkbook(wb){
-  WB = wb;
-  CITY_DATA = {};
-  const sel = document.getElementById('citySelect');
-  sel.innerHTML = '<option value="">Select City</option>';
-
-  // Find city tabs — match known cities OR any tab with data
-  const found = [];
+  let loaded=0;
   for(const name of wb.SheetNames){
-    const nm = name.trim();
-    // Check if it matches a known city or contains city-like data
-    const isCity = CITIES.some(c => nm.toLowerCase().includes(c.toLowerCase().split(' ')[0])) 
-      || nm === 'Sheet1'; // Template fallback
-    if(isCity || tryParseSheet(wb.Sheets[nm])){
-      const parsed = parseOneSheet(wb.Sheets[nm]);
-      if(parsed.data.length > 0){
-        const label = nm === 'Sheet1' ? 'Template' : nm;
-        CITY_DATA[label] = parsed;
-        found.push(label);
+    const ws=wb.Sheets[name];if(!ws)continue;
+    const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null});
+    if(rows.length<5)continue;
+    // Find header row with "Sub metrics"
+    let hdr=-1,smCol=-1;
+    for(let i=0;i<Math.min(6,rows.length);i++){
+      const r=rows[i];if(!r)continue;
+      for(let j=0;j<Math.min(10,r.length);j++){
+        if(r[j]&&/sub.?metric/i.test(String(r[j]))){hdr=i;smCol=j;break}
+      }
+      if(hdr>=0)break;
+    }
+    if(hdr<0)continue;
+    // Column mapping: section=smCol-1, sub=smCol, data starts at smCol+1
+    const secC=smCol-1, subC=smCol, dC=smCol+1;
+    // Extract meta
+    const meta={date:'',day:''};
+    for(let i=0;i<=hdr;i++){
+      const r=rows[i];if(!r)continue;
+      for(let j=0;j<r.length;j++){
+        const v=r[j];if(!v)continue;
+        const s=String(v);
+        if(/\d{4}-\d{2}-\d{2}/.test(s)&&!meta.date)meta.date=s.substring(0,10);
+        else if(/^\d{2}-[A-Z][a-z]{2}-\d{2}$/.test(s.trim()))meta.date=s.trim();
+        if(/day$/i.test(s.trim())&&s.trim().length<12)meta.day=s.trim();
       }
     }
-  }
-
-  // Also try all sheets if no known cities found
-  if(!found.length){
-    for(const name of wb.SheetNames){
-      const parsed = parseOneSheet(wb.Sheets[name]);
-      if(parsed.data.length > 0){
-        CITY_DATA[name] = parsed;
-        found.push(name);
+    // Extract D-1 label for date
+    const hdrR=rows[hdr];
+    if(hdrR){for(let j=dC;j<hdrR.length;j++){
+      const v=hdrR[j];if(v&&/D-1/i.test(String(v))){
+        const dm=String(v).match(/(\d{2}-[A-Za-z]+-\d{2,4})/);
+        if(dm)meta.date=dm[1];
       }
+    }}
+    // Parse data
+    const data=[];let cur=null;
+    for(let i=hdr+1;i<rows.length;i++){
+      const r=rows[i];if(!r)continue;
+      const sv=r[secC];
+      if(sv!=null&&String(sv).trim()&&!/owner/i.test(String(sv)))cur=String(sv).trim();
+      if(r[subC]==null)continue;
+      const cl=v=>{if(v==null)return null;if(typeof v==='string'){const s=v.trim();if(!s||s==='-'||s.startsWith('#'))return null;const n=Number(s);return isNaN(n)?null:n}return typeof v==='number'?v:null};
+      data.push({s:cur,m:String(r[subC]).trim(),
+        st:cl(r[dC]),snt:cl(r[dC+1]),wt:cl(r[dC+2]),d1:cl(r[dC+3]),da:cl(r[dC+4]),
+        lmtd:cl(r[dC+5]),lm:cl(r[dC+6]),mtd:cl(r[dC+7]),mvl:cl(r[dC+8]),
+        mt:cl(r[dC+9]),proj:cl(r[dC+10]),ma:cl(r[dC+11]),
+        l7:cl(r[dC+12]),ll7:cl(r[dC+13]),wt2:cl(r[dC+14]),wa:cl(r[dC+15])});
     }
+    if(!data.length)continue;
+    // Determine city name
+    const cityMatch=CITIES.find(c=>name.toLowerCase().includes(c.toLowerCase().split(' ')[0]));
+    const city=cityMatch||name;
+    const dateKey=meta.date||'latest';
+    if(!STORE[city])STORE[city]={};
+    STORE[city][dateKey]={meta,data};
+    loaded++;
   }
+  rebuildDropdowns();
+  if(loaded)showToast('✓ Loaded '+loaded+' sheet'+(loaded>1?'s':''));
+  else showToast('No valid sheets found','err');
+}
 
-  // Populate dropdown
-  for(const c of found){
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c;
-    sel.appendChild(opt);
-  }
-
-  // Also add placeholder cities not yet in file
+// ═══ DROPDOWNS ═══
+function rebuildDropdowns(){
+  const cs=document.getElementById('citySelect'),ds=document.getElementById('dateSelect');
+  const cities=Object.keys(STORE);
+  cs.innerHTML='<option value="">Select City</option>';
   for(const c of CITIES){
-    if(!found.some(f => f.toLowerCase().includes(c.toLowerCase().split(' ')[0]))){
-      const opt = document.createElement('option');
-      opt.value = c; opt.textContent = c + ' (no data)'; opt.disabled = true;
-      sel.appendChild(opt);
+    const has=cities.some(k=>k.toLowerCase().includes(c.toLowerCase().split(' ')[0]));
+    const key=cities.find(k=>k.toLowerCase().includes(c.toLowerCase().split(' ')[0]))||c;
+    const o=document.createElement('option');o.value=key;o.textContent=c;
+    if(!has){o.disabled=true;o.textContent=c+' (no data)'}
+    cs.appendChild(o);
+  }
+  // Non-standard city names
+  for(const c of cities){
+    if(!CITIES.some(ci=>c.toLowerCase().includes(ci.toLowerCase().split(' ')[0]))){
+      const o=document.createElement('option');o.value=c;o.textContent=c;cs.appendChild(o);
     }
   }
-
-  if(found.length){
-    activeCity = found[0];
-    sel.value = activeCity;
-    render();
-    showToast('✓ Loaded — ' + found.length + ' city tab' + (found.length>1?'s':''));
-  } else {
-    showToast('No valid city tabs found');
-  }
-}
-
-function tryParseSheet(ws){
-  if(!ws) return false;
-  const r = XLSX.utils.sheet_to_json(ws,{header:1,defval:null,range:0});
-  return r.length > 5;
-}
-
-function parseOneSheet(ws){
-  const rows = XLSX.utils.sheet_to_json(ws,{header:1,defval:null});
-  const data=[]; let cur=null;
-  let meta = {date:'',day:''};
-
-  // Find header row — look for "METRIC" or "Sub metrics"
-  let hdrRow = 1;
-  for(let i=0;i<Math.min(5,rows.length);i++){
-    const r=rows[i];
-    if(r && r.some(c => c && String(c).trim()==='Sub metrics')){hdrRow=i;break}
-  }
-
-  // Try to get date from row before header
-  if(hdrRow > 0){
-    const r0 = rows[hdrRow-1];
-    if(r0){
-      for(let j=10;j<r0.length;j++){
-        const v=r0[j];
-        if(v && /\d{4}/.test(String(v))){
-          meta.date = String(v).substring(0,10); break;
-        }
-      }
-      // Day name
-      for(let j=10;j<r0.length;j++){
-        const v=r0[j];
-        if(v && /day$/i.test(String(v).trim())){
-          meta.day = String(v).trim(); break;
-        }
-      }
-    }
-  }
-
-  // Also check row 0 col 0 for city name
-  const cityCell = rows[hdrRow-1] && rows[hdrRow-1][0];
-
-  for(let i=hdrRow+1;i<rows.length;i++){
-    const r=rows[i]; if(!r)continue;
-    if(r[0]!==null&&r[0]!==undefined&&String(r[0]).trim())cur=String(r[0]).trim();
-    if(!r[1])continue;
-    const cl=v=>{if(v===null||v===undefined)return null;if(typeof v==='string'){const s=v.trim();if(!s||s==='-'||s.startsWith('#'))return null;const n=Number(s);return isNaN(n)?null:n}return typeof v==='number'?v:null};
-    data.push({s:cur,m:String(r[1]).trim(),st:cl(r[2]),snt:cl(r[3]),wt:cl(r[4]),d1:cl(r[5]),da:cl(r[6]),lmtd:cl(r[7]),lm:cl(r[8]),mtd:cl(r[9]),mvl:cl(r[10]),mt:cl(r[11]),proj:cl(r[12]),ma:cl(r[13]),l7:cl(r[14]),ll7:cl(r[15]),wt2:cl(r[16]),wa:cl(r[17])});
-  }
-  return {meta, data};
-}
-
-function switchCity(c){
-  if(!c || !CITY_DATA[c])return;
-  activeCity = c;
+  if(!activeCity&&cities.length)activeCity=cities[0];
+  if(activeCity)cs.value=activeCity;
+  rebuildDates();
   render();
 }
+function rebuildDates(){
+  const ds=document.getElementById('dateSelect');
+  ds.innerHTML='<option value="">All / Latest</option>';
+  if(!STORE[activeCity])return;
+  const dates=Object.keys(STORE[activeCity]).sort().reverse();
+  for(const d of dates){
+    const o=document.createElement('option');o.value=d;
+    o.textContent=d==='latest'?'Latest':formatDateLabel(d);
+    ds.appendChild(o);
+  }
+  if(!activeDate&&dates.length)activeDate=dates[0];
+  ds.value=activeDate;
+}
+function formatDateLabel(d){
+  try{const dt=new Date(d);return dt.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}catch(e){return d}
+}
+function switchCity(c){if(!c)return;activeCity=c;activeDate='';rebuildDates();render()}
+function switchDate(d){activeDate=d;render()}
 
-// ═══════════════════════════════════════════
-// ALERTS
-// ═══════════════════════════════════════════
-function buildAlerts(data, meta){
-  const alerts=[];
+// ═══ CURRENT DATA ═══
+function getCurrent(){
+  if(!STORE[activeCity])return null;
+  const dates=Object.keys(STORE[activeCity]).sort().reverse();
+  const key=activeDate||dates[0];
+  return STORE[activeCity][key]||null;
+}
+
+// ═══ ALERTS ═══
+function buildAlerts(data,meta){
+  const a=[];
   for(const r of data){
-    let dayT=r.wt;
-    if(meta.day){const dl=meta.day.toLowerCase();if(dl==='saturday')dayT=r.st;else if(dl==='sunday')dayT=r.snt}
-    if(r.da!==null&&r.da!==0&&r.da<1)
-      alerts.push({section:r.s,metric:r.m,period:'Daily',ach:r.da,actual:r.d1,target:dayT,priority:r.da<.7?'crit':'warn'});
-    if(r.ma!==null&&r.ma!==0&&r.ma<1&&r.ma>.01)
-      alerts.push({section:r.s,metric:r.m,period:'Monthly',ach:r.ma,actual:r.mtd,target:r.mt,priority:r.ma<.7?'crit':'warn'});
-    if(r.wa!==null&&r.wa!==0&&r.wa<1&&r.wa>.01)
-      alerts.push({section:r.s,metric:r.m,period:'Weekly',ach:r.wa,actual:r.l7,target:r.wt2,priority:r.wa<.7?'crit':'warn'});
+    let dt=r.wt;if(meta.day){const d=meta.day.toLowerCase();if(d==='saturday')dt=r.st;else if(d==='sunday')dt=r.snt}
+    if(r.da!=null&&r.da!==0&&r.da<1)a.push({section:r.s,metric:r.m,period:'Daily',ach:r.da,actual:r.d1,target:dt,priority:r.da<.7?'crit':'warn'});
+    if(r.ma!=null&&r.ma!==0&&r.ma<1&&r.ma>.01)a.push({section:r.s,metric:r.m,period:'Monthly',ach:r.ma,actual:r.mtd,target:r.mt,priority:r.ma<.7?'crit':'warn'});
+    if(r.wa!=null&&r.wa!==0&&r.wa<1&&r.wa>.01)a.push({section:r.s,metric:r.m,period:'Weekly',ach:r.wa,actual:r.l7,target:r.wt2,priority:r.wa<.7?'crit':'warn'});
   }
-  alerts.sort((a,b)=>a.priority!==b.priority?(a.priority==='crit'?-1:1):a.ach-b.ach);
-  return alerts;
+  return a.sort((a,b)=>a.priority!==b.priority?(a.priority==='crit'?-1:1):a.ach-b.ach);
 }
-
-function renderAlerts(data, meta){
+function renderAlerts(data,meta){
   const el=document.getElementById('alertsPanel');
-  const alerts=buildAlerts(data, meta);
+  const alerts=buildAlerts(data,meta);
   const cc=alerts.filter(a=>a.priority==='crit').length;
-  const wc=alerts.filter(a=>a.priority==='warn').length;
-  let h=`<div class="ap-title">⚠️ Alerts <span class="ap-count ${alerts.length?'red':'grn'}">${alerts.length}</span></div>`;
-  h+=`<div class="ap-sub">${cc} critical · ${wc} warning</div>`;
-  if(!alerts.length){h+='<div class="ap-empty">All metrics on track ✓</div>';el.innerHTML=h;return}
-  for(const period of ['Daily','Monthly','Weekly']){
-    const items=alerts.filter(a=>a.period===period);
-    if(!items.length)continue;
-    h+=`<div class="ap-section"><div class="ap-section-title">${period} (${items.length})</div>`;
+  let h=`<div class="ap-title">⚠️ Alerts <span class="ap-count ${alerts.length?'red':'grn'}">${alerts.length}</span></div><div class="ap-sub">${cc} critical · ${alerts.length-cc} warning</div>`;
+  if(!alerts.length){el.innerHTML=h+'<div class="ap-empty">All metrics on track ✓</div>';return}
+  for(const p of['Daily','Monthly','Weekly']){
+    const items=alerts.filter(a=>a.period===p);if(!items.length)continue;
+    h+=`<div class="ap-section"><div class="ap-section-title">${p} (${items.length})</div>`;
     for(const a of items){
-      const pv=(a.ach*100).toFixed(0);
       h+=`<div class="alert-item ${a.priority==='crit'?'alert-crit':'alert-warn'}">
-        <div class="al-top"><span class="al-metric">${a.metric}</span><span class="al-pct ${a.priority==='crit'?'red':'yel'}">${pv}%</span></div>
+        <div class="al-top"><span class="al-metric">${a.metric}</span><span class="al-pct ${a.priority==='crit'?'red':'yel'}">${(a.ach*100).toFixed(0)}%</span></div>
         <div class="al-detail">Actual: ${fv(a.actual,a.metric)} · Target: ${fv(a.target,a.metric)}</div>
-        <div class="al-channel">${a.section}</div>
-      </div>`;
-    }
-    h+='</div>';
+        <div class="al-channel">${a.section}</div></div>`;
+    }h+='</div>';
   }
   el.innerHTML=h;
 }
 
-// ═══════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════
+// ═══ RENDER ═══
 function render(){
-  const cd = CITY_DATA[activeCity];
-  if(!cd)return;
-  const {meta, data} = cd;
-
-  // Update title
-  document.querySelector('.tb-title').textContent = 'Control Tower · ' + activeCity;
-
-  // Date
-  const db=document.getElementById('dateBadge');
-  if(meta.date){
-    const d=new Date(meta.date);
-    db.innerHTML='<b>'+(meta.day||'')+'</b> · '+d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
-  }else db.innerHTML='<b>Template</b>';
-
-  renderTabs();
-  renderSections(data, meta);
-  renderAlerts(data, meta);
+  const cd=getCurrent();if(!cd)return;
+  document.getElementById('tbTitle').textContent='Control Tower · '+activeCity;
+  renderTabs();renderSections(cd.data,cd.meta);renderAlerts(cd.data,cd.meta);
 }
-
 function renderTabs(){
-  const el=document.getElementById('navTabs');
-  let h='';for(const t of TABS)h+=`<button class="nav-tab ${activeTab===t?'active':''}" onclick="activeTab='${t}';renderTabs();renderSections(CITY_DATA[activeCity].data,CITY_DATA[activeCity].meta)">${TAB_LBL[t]}</button>`;
+  const el=document.getElementById('navTabs');let h='';
+  for(const t of TABS)h+=`<button class="nav-tab ${activeTab===t?'active':''}" onclick="activeTab='${t}';render()">${TAB_LBL[t]}</button>`;
   el.innerHTML=h;
 }
-
-function renderSections(data, meta){
-  const wrap=document.getElementById('sectionsWrap');
-  // Group by section, preserve order from data
-  const secs={},order=[];
+function renderSections(data,meta){
+  const wrap=document.getElementById('sectionsWrap'),secs={},order=[];
   for(const d of data){if(!secs[d.s]){secs[d.s]=[];order.push(d.s)}secs[d.s].push(d)}
-
-  // Filter by tab
-  const visible=order.filter(s=>{
-    if(activeTab==='all')return true;
-    const cfg=SEC_CFG[s];
-    return cfg&&cfg.gp===activeTab;
-  });
-
+  const vis=order.filter(s=>{if(activeTab==='all')return true;const c=SEC_CFG[s];return c&&c.gp===activeTab});
   let h='',lastGp=null;
-  for(const sec of visible){
+  for(const sec of vis){
     const cfg=SEC_CFG[sec]||{ic:'•',cl:'#999',gp:'other'};
-    const isSub=cfg.pr!==undefined&&cfg.pr!==null;
+    const isSub=cfg.pr!=null;
     if(activeTab==='all'&&cfg.gp!==lastGp&&!isSub){lastGp=cfg.gp;h+=`<div class="group-label">${GP[cfg.gp]||cfg.gp}</div>`}
     h+=buildCard(sec,secs[sec],cfg,isSub,meta);
   }
   wrap.innerHTML=h;
 }
-
 function buildCard(sec,rows,cfg,isSub,meta){
-  const ic=collapsed.has(sec);
-  const has=rows.some(r=>r.d1!==null||r.mtd!==null||r.l7!==null||r.lmtd!==null);
-  let h=`<div class="sec-card ${isSub?'sub-card':''}">
-    <div class="sec-hdr" onclick="tog('${sec}')">
-      <div class="sec-name"><div class="sec-icon" style="background:${cfg.cl}">${cfg.ic.length<=2?cfg.ic:''}</div>${sec}${!has?'<span class="sec-badge">No data</span>':''}</div>
-      <div class="sec-toggle ${ic?'c':''}">▾</div>
-    </div>
+  const ic=collapsed.has(sec),has=rows.some(r=>r.d1!=null||r.mtd!=null||r.l7!=null||r.lmtd!=null);
+  let h=`<div class="sec-card ${isSub?'sub-card':''}"><div class="sec-hdr" onclick="tog('${sec}')">
+    <div class="sec-name"><div class="sec-icon" style="background:${cfg.cl}">${cfg.ic.length<=2?cfg.ic:''}</div>${sec}${!has?'<span class="sec-badge">No data</span>':''}</div>
+    <div class="sec-toggle ${ic?'c':''}">▾</div></div>
     <div class="sec-body ${ic?'c':''}"><table class="ct"><thead>
-      <tr><th rowspan="2"></th>
-        <th class="tg tg-y dv-y" colspan="3">YESTERDAY</th>
-        <th class="tg tg-m dv-m" colspan="5">MONTHLY</th>
-        <th class="tg tg-w" colspan="3">WEEKLY</th></tr>
-      <tr class="sub-th">
-        <th>Target</th><th>D-1</th><th class="dv-y">Ach %</th>
-        <th>LMTD</th><th>MTD</th><th>MTD/LMTD</th><th>Target</th><th class="dv-m">Ach %</th>
-        <th>L7D</th><th>LL7D</th><th>Ach %</th></tr>
+      <tr><th rowspan="2"></th><th class="tg tg-y dv-y" colspan="3">YESTERDAY</th><th class="tg tg-m dv-m" colspan="5">MONTHLY</th><th class="tg tg-w" colspan="3">WEEKLY</th></tr>
+      <tr class="sub-th"><th>Target</th><th>D-1</th><th class="dv-y">Ach %</th><th>LMTD</th><th>MTD</th><th>MTD/LMTD</th><th>Target</th><th class="dv-m">Ach %</th><th>L7D</th><th>LL7D</th><th>Ach %</th></tr>
     </thead><tbody>`;
-  if(!has){h+='<tr class="empty-row"><td colspan="12">Awaiting data</td></tr>';}
-  else{for(const r of rows){
-    let dt=r.wt;
-    if(meta.day){const dl=meta.day.toLowerCase();if(dl==='saturday')dt=r.st;else if(dl==='sunday')dt=r.snt}
-    h+=`<tr><td>${r.m}</td>
-      <td>${fv(dt,r.m)}</td><td>${fv(r.d1,r.m)}</td><td class="dv-y">${fach(r.da)}</td>
-      <td>${fv(r.lmtd,r.m)}</td><td>${fv(r.mtd,r.m)}</td><td>${fach(r.mvl)}</td><td>${fv(r.mt,r.m)}</td><td class="dv-m">${fach(r.ma)}</td>
-      <td>${fv(r.l7,r.m)}</td><td>${fv(r.ll7,r.m)}</td><td>${fach(r.wa)}</td></tr>`;
-  }}
-  h+='</tbody></table></div></div>';
-  return h;
+  if(!has)h+='<tr class="empty-row"><td colspan="12">Awaiting data</td></tr>';
+  else for(const r of rows){
+    let dt=r.wt;if(meta.day){const d=meta.day.toLowerCase();if(d==='saturday')dt=r.st;else if(d==='sunday')dt=r.snt}
+    h+=`<tr><td>${r.m}</td><td>${fv(dt,r.m)}</td><td>${fv(r.d1,r.m)}</td><td class="dv-y">${fach(r.da)}</td><td>${fv(r.lmtd,r.m)}</td><td>${fv(r.mtd,r.m)}</td><td>${fach(r.mvl)}</td><td>${fv(r.mt,r.m)}</td><td class="dv-m">${fach(r.ma)}</td><td>${fv(r.l7,r.m)}</td><td>${fv(r.ll7,r.m)}</td><td>${fach(r.wa)}</td></tr>`;
+  }
+  return h+'</tbody></table></div></div>';
+}
+function tog(s){collapsed.has(s)?collapsed.delete(s):collapsed.add(s);render()}
+
+// ═══ AI PARSE ═══
+function openAI(){document.getElementById('aiModal').classList.add('show')}
+function closeAI(){document.getElementById('aiModal').classList.remove('show');aiFile=null}
+
+document.getElementById('fileInputAI').addEventListener('change',function(e){
+  aiFile=e.target.files[0];if(!aiFile)return;
+  document.getElementById('aiStatus').textContent='File ready: '+aiFile.name+' ('+Math.round(aiFile.size/1024)+'KB)';
+  openAI();this.value='';
+});
+
+async function runAI(){
+  if(!aiFile){showToast('No file selected','err');return}
+  const btn=document.getElementById('aiRunBtn');
+  btn.innerHTML='<span class="spinner"></span> Analyzing...';btn.disabled=true;
+  try{
+    // Read file as text/csv or parse xlsx to csv
+    let csvText='';
+    if(aiFile.name.endsWith('.csv')){
+      csvText=await aiFile.text();
+    }else{
+      const buf=await aiFile.arrayBuffer();
+      const wb=XLSX.read(new Uint8Array(buf),{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      csvText=XLSX.utils.sheet_to_csv(ws,{FS:',',RS:'\n'});
+    }
+    // Truncate to first 3000 chars to fit context
+    const sample=csvText.substring(0,3000);
+    const userCtx=document.getElementById('aiContext').value.trim();
+
+    // Build prompt
+    const sectionList=Object.keys(SEC_CFG).join(', ');
+    const prompt=`You are a data analyst for Cars24. I'm giving you raw data from a marketing report. Map it to our Control Tower format.
+
+Our Control Tower sections: ${sectionList}
+Each section has sub-metrics like: Leads, BC, Visits, Spends, Clicks, CPC, L2BC, L2V, CTR, etc.
+Columns needed: section (s), metric (m), d1 (yesterday value), mtd (month to date), l7 (last 7 days).
+
+${userCtx?'User context: '+userCtx:''}
+
+Raw data (first rows):
+${sample}
+
+Return ONLY a valid JSON array of objects like: [{"s":"Google - Total","m":"Spends","d1":40502,"mtd":163019},...]
+Map every row you can. Skip rows that don't match any Control Tower metric. Return ONLY JSON, no markdown.`;
+
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+    });
+    const result=await resp.json();
+    const text=result.content.map(c=>c.text||'').join('');
+    const clean=text.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+
+    if(!Array.isArray(parsed)||!parsed.length)throw new Error('No data returned');
+
+    // Merge into store
+    const city=activeCity||'Mumbai';
+    const dateKey='ai-import';
+    const data=parsed.map(r=>({s:r.s||'',m:r.m||'',st:null,snt:null,wt:null,d1:r.d1??null,da:null,lmtd:null,lm:null,mtd:r.mtd??null,mvl:null,mt:null,proj:null,ma:null,l7:r.l7??null,ll7:null,wt2:null,wa:null}));
+
+    if(!STORE[city])STORE[city]={};
+    STORE[city][dateKey]={meta:{date:'AI Import',day:''},data};
+    activeDate=dateKey;
+    rebuildDropdowns();
+    closeAI();
+    showToast('✓ AI mapped '+parsed.length+' metrics');
+  }catch(err){
+    showToast('AI error: '+err.message,'err');
+  }finally{
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4a2 2 0 01-2-2 4 4 0 014-4z"/><path d="M8 8v8a4 4 0 004 4 4 4 0 004-4V8"/></svg> Run Inference';
+    btn.disabled=false;
+  }
 }
 
-function tog(s){collapsed.has(s)?collapsed.delete(s):collapsed.add(s);
-  const cd=CITY_DATA[activeCity];if(cd)renderSections(cd.data,cd.meta)}
+// ═══ TOAST ═══
+function showToast(msg,type){const el=document.getElementById('toast');el.textContent=msg;el.className='toast'+(type==='err'?' err':'')+' show';setTimeout(()=>el.classList.remove('show'),3000)}
 
-// ═══════════════════════════════════════════
-// TOAST + FILE
-// ═══════════════════════════════════════════
-function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
-
+// ═══ FILE UPLOAD ═══
 document.getElementById('fileInput').addEventListener('change',function(e){
   const f=e.target.files[0];if(!f)return;
   const reader=new FileReader();
-  reader.onload=function(ev){try{const d=new Uint8Array(ev.target.result);const wb=XLSX.read(d,{type:'array',cellDates:true});parseWorkbook(wb)}catch(err){showToast('Error: '+err.message)}};
+  reader.onload=ev=>{try{parseWorkbook(XLSX.read(new Uint8Array(ev.target.result),{type:'array',cellDates:true}))}catch(err){showToast('Error: '+err.message,'err')}};
   reader.readAsArrayBuffer(f);this.value='';
 });
 
-// ═══════════════════════════════════════════
-// INITIAL LOAD
-// ═══════════════════════════════════════════
+// ═══ INIT ═══
 (function(){
-  // Build empty dropdown with all cities
-  const sel = document.getElementById('citySelect');
-  for(const c of CITIES){
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c; opt.disabled = true;
-    sel.appendChild(opt);
-  }
-
-  // If we have embedded data, load it
-  try {
-    const INIT = {"meta": {"date": "2026-04-05", "day": "Sunday"}, "data": [{"s": "Overall", "m": "Listings", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 2018.0, "da": null, "lmtd": 5909.0, "lm": null, "mtd": 9519.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Visits", "st": 150.64898360160208, "snt": 237.603008721135, "wt": 108.61109087968411, "d1": 298.0, "da": 1.254192872, "lmtd": 668.0, "lm": 4492.0, "mtd": 970.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Unique Check ins", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Uni sch bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 930.0, "da": 1.245775471, "lmtd": 1720.0, "lm": null, "mtd": 2830.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "US BC2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "TD Denied %", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Checkin denied %", "st": null, "snt": null, "wt": null, "d1": 0.006, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 0.017, "ll7": 0.024, "wt2": null, "wa": null}, {"s": "Overall", "m": "App installs", "st": null, "snt": null, "wt": null, "d1": 2960.0, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 17202.0, "ll7": 17787.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "D0 Uninstall %", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Sessions", "st": null, "snt": null, "wt": null, "d1": 137497.0, "da": null, "lmtd": 395191.0, "lm": null, "mtd": 550034.0, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 743780.0, "ll7": 748364.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "Events per session", "st": null, "snt": null, "wt": null, "d1": 74.2, "da": null, "lmtd": 83.62, "lm": null, "mtd": 80.31, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": 80.94, "ll7": 68.0, "wt2": null, "wa": null}, {"s": "CLASSIFIED", "m": "Listings", "st": 546.0, "snt": 582.0, "wt": 582.0, "d1": 754.0, "da": 1.295532646, "lmtd": 662.0, "lm": 662.0, "mtd": 774.0, "mvl": 582.0, "mt": 582.0, "proj": null, "ma": 0.0, "l7": null, "ll7": null, "wt2": 404.0, "wa": 0.0}, {"s": "CLASSIFIED", "m": "Leads", "st": 161.0, "snt": 174.0, "wt": 710.0, "d1": 174.0, "da": 1.080745342, "lmtd": 661.0, "lm": 3653.0, "mtd": 765.0, "mvl": 1693.0, "mt": 4443.0, "proj": 4590.0, "ma": 1.033085753, "l7": 1045.0, "ll7": 1005.0, "wt2": 1005.0, "wa": 1.039800995}, {"s": "CLASSIFIED", "m": "Lead per listing", "st": 0.2948717949, "snt": 0.2989690722, "wt": 1.219931271, "d1": 0.2307692308, "da": 0.7826086957, "lmtd": 0.998489426, "lm": 5.518126888, "mtd": 0.988372093, "mvl": 2.908934708, "mt": 7.634020619, "proj": 5.930232558, "ma": 0.7768164188, "l7": null, "ll7": null, "wt2": 2.487623762, "wa": 0.0}, {"s": "CLASSIFIED", "m": "Visits", "st": 4.0, "snt": 6.0, "wt": 25.0, "d1": 6.0, "da": 1.5, "lmtd": 30.0, "lm": 187.0, "mtd": 37.0, "mvl": 84.66666667, "mt": 187.0, "proj": 222.0, "ma": 1.187165775, "l7": 52.0, "ll7": 38.0, "wt2": 38.0, "wa": 1.368421053}, {"s": "CLASSIFIED", "m": "L2BC", "st": 0.0976, "snt": 0.1111, "wt": 235.0, "d1": 54.0, "da": 0.229787234, "lmtd": 0.26, "lm": 0.26006022447303584, "mtd": 0.3, "mvl": 0.2733534082, "mt": 0.1968421053, "proj": 1.8, "ma": 9.144385027, "l7": 0.034, "ll7": 0.23582089552238805, "wt2": 0.23582089552238805, "wa": 0.1441772152}, {"s": "CLASSIFIED", "m": "L2V", "st": 0.0248447205, "snt": 0.03448275862, "wt": 0.03521126761, "d1": 0.03448275862, "da": 1.387931034, "lmtd": 0.04538577912, "lm": 0.05119080208, "mtd": 0.04836601307, "mvl": 0.04831419809, "mt": 0.04929033775, "proj": 0.2901960784, "ma": 5.887484073, "l7": 0.04976076555, "ll7": 0.03781094527, "wt2": 0.03781094527, "wa": 1.316041299}, {"s": "ATM", "m": "Videos Live", "st": 4.0, "snt": 4.0, "wt": 2.0, "d1": 1.0, "da": 0.25, "lmtd": 5.0, "lm": 39.0, "mtd": 6.0, "mvl": 1.2, "mt": 75.0, "proj": 36.0, "ma": 0.48, "l7": 3.0, "ll7": 8.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "Leads", "st": 200.0, "snt": 220.0, "wt": 190.0, "d1": 241.0, "da": 1.205, "lmtd": 878.5, "lm": 5971.5, "mtd": 812.0, "mvl": 0.9243027888, "mt": 4727.0, "proj": 4872.0, "ma": 1.030674847, "l7": 1122.0, "ll7": 1063.5, "wt2": null, "wa": null}, {"s": "ATM", "m": "Visits", "st": 4.0, "snt": 24.5, "wt": null, "d1": 5.0, "da": 1.25, "lmtd": 20.0, "lm": 143.0, "mtd": 16.5, "mvl": 0.825, "mt": 150.0, "proj": 99.0, "ma": 0.66, "l7": 25.0, "ll7": 27.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": 0.166, "da": null, "lmtd": 0.147, "lm": 0.155, "mtd": 0.195, "mvl": 1.326530612, "mt": 0.16, "proj": null, "ma": 0.0, "l7": 0.193, "ll7": 0.202, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.01, "da": null, "lmtd": 0.023, "lm": 0.024, "mtd": 0.02, "mvl": 0.8695652174, "mt": 0.025, "proj": null, "ma": 0.0, "l7": 0.022, "ll7": 0.025, "wt2": null, "wa": null}, {"s": "GMB", "m": "Leads", "st": 3100.0, "snt": 3300.0, "wt": 2900.0, "d1": 2884.0, "da": 0.9303225806, "lmtd": 13339.0, "lm": 84482.0, "mtd": 14466.0, "mvl": 1.084489092, "mt": 90000.0, "proj": 86796.0, "ma": 0.9644, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "BC", "st": 480.0, "snt": 530.0, "wt": 380.0, "d1": 591.0, "da": 1.23125, "lmtd": 1601.0, "lm": 12233.0, "mtd": 2555.0, "mvl": 1.595877577, "mt": 12500.0, "proj": 15330.0, "ma": 1.2264, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "Visits", "st": 140.0, "snt": 160.0, "wt": 125.0, "d1": 199.0, "da": 1.421428571, "lmtd": 465.0, "lm": 3315.0, "mtd": 646.0, "mvl": 1.389247312, "mt": 4000.0, "proj": 3876.0, "ma": 0.969, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "L2BC", "st": 0.1548387097, "snt": 0.1606060606, "wt": 0.1310344828, "d1": 0.2049237171, "da": 1.323465673, "lmtd": 0.1200239898, "lm": 0.1448000758, "mtd": 0.1766210424, "mvl": 0.1471483693, "mt": 0.1388888889, "proj": 0.1766210424, "ma": 1.271671506, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "L2V", "st": 0.04516129032, "snt": 0.04848484848, "wt": 0.04310344828, "d1": 0.06900138696, "da": 1.527887854, "lmtd": 0.03486018442, "lm": 0.03923912786, "mtd": 0.04465643578, "mvl": 0.03958524935, "mt": 0.04444444444, "proj": 0.04465643578, "ma": 1.004769805, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "Delivered", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "CTR", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "Calls Connected", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "C2L%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "IVR", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Installs", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPI", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "Clicks", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "CPC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "Leads", "st": 6186.0, "snt": 6568.0, "wt": 5668.0, "d1": 266.6666667, "da": 0.04310809354, "lmtd": 39744.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "BC", "st": 302.0, "snt": 367.0, "wt": 291.0, "d1": null, "da": 0.0, "lmtd": 649.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "Visits", "st": 83.0, "snt": 87.0, "wt": 60.0, "d1": null, "da": 0.0, "lmtd": 147.0, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "L2BC", "st": 0.04881991594, "snt": 0.05587697929, "wt": 0.05134086097, "d1": null, "da": 0.0, "lmtd": 0.01632950886, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Affiliates", "m": "L2V", "st": 0.01341739412, "snt": 0.01324604141, "wt": 0.01058574453, "d1": null, "da": 0.0, "lmtd": 0.003698671498, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": 337.0, "da": null, "lmtd": 664.0, "lm": 4403.0, "mtd": 1388.0, "mvl": 2.090361446, "mt": null, "proj": null, "ma": null, "l7": 1621.0, "ll7": 1001.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": 27.0, "da": null, "lmtd": 79.0, "lm": 399.0, "mtd": 96.0, "mvl": 1.215189873, "mt": null, "proj": null, "ma": null, "l7": 117.0, "ll7": 90.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.08011869436, "da": null, "lmtd": 0.1189759036, "lm": 0.0906200318, "mtd": 0.06916426513, "mvl": 0.5813300259, "mt": null, "proj": null, "ma": null, "l7": 0.07217766811, "ll7": 0.08991008991, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": 139.0, "da": null, "lmtd": 683.0, "lm": 3943.0, "mtd": 549.0, "mvl": 0.803806735, "mt": null, "proj": null, "ma": null, "l7": 758.0, "ll7": 981.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": 3.0, "da": null, "lmtd": 19.0, "lm": 138.0, "mtd": 29.0, "mvl": 1.526315789, "mt": null, "proj": null, "ma": null, "l7": 39.0, "ll7": 33.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": 0.02158273381, "da": null, "lmtd": 0.02781844802, "lm": 0.03499873193, "mtd": 0.05282331512, "mvl": 1.89885917, "mt": null, "proj": null, "ma": null, "l7": 0.05145118734, "ll7": 0.03363914373, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}]};
-    if(INIT && INIT.data && INIT.data.length){
-      CITY_DATA['Mumbai'] = INIT;
-      const opt = sel.querySelector('option[value="Mumbai"]');
-      if(opt){opt.disabled = false; opt.textContent = 'Mumbai';}
-      activeCity = 'Mumbai';
-      sel.value = 'Mumbai';
-      render();
+  try{
+    const I={"meta": {"date": "2026-04-05", "day": "Sunday", "d1_label": "D-1 05-Apr-26"}, "data": [{"s": "Overall", "m": "Listings", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 438.0, "lm": 485.0, "mtd": 541.0, "mvl": 1.235159817, "mt": 559.0, "proj": 3246.0, "ma": 5.806797853, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 2018.0, "da": null, "lmtd": 5909.0, "lm": null, "mtd": 9519.0, "mvl": 1.610932476, "mt": null, "proj": 57114.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Visits", "st": 150.64898360160208, "snt": 237.603008721135, "wt": 108.61109087968411, "d1": 298.0, "da": 1.978108268, "lmtd": 664.0, "lm": 4492.0, "mtd": 967.0, "mvl": 1.456325301, "mt": 3943.029925187033, "proj": 5802.0, "ma": 1.471457258, "l7": 1202.0, "ll7": 1086.0, "wt2": 931.3074467, "wa": 1.290658637}, {"s": "Overall", "m": "Unique Check ins", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": 0.0, "wa": null}, {"s": "Overall", "m": "Uni sch bookings", "st": 368.7625120334868, "snt": 746.5229665900525, "wt": 447.0771428834657, "d1": 930.0, "da": 2.521948326, "lmtd": 1720.0, "lm": 9832.0, "mtd": 2830.0, "mvl": 1.645348837, "mt": 14296.839057930403, "proj": 16980.0, "ma": 1.187675117, "l7": 3269.0, "ll7": 2659.0, "wt2": 3350.671193, "wa": 0.975625423}, {"s": "Overall", "m": "US BC2V", "st": 0.4085257549, "snt": 0.3182795699, "wt": 0.2429359063, "d1": 0.3204301075, "da": 0.7843571763, "lmtd": 0.3860465116, "lm": 0.4568755085, "mtd": 0.3416961131, "mvl": 0.8851164375, "mt": 0.275797322, "proj": null, "ma": null, "l7": 0.3676965433, "ll7": 0.4084242196, "wt2": 0.2779465346, "wa": 1.322903859}, {"s": "Overall", "m": "TD Denied %", "st": null, "snt": null, "wt": null, "d1": 0.029, "da": null, "lmtd": 0.047, "lm": 0.048, "mtd": 0.058, "mvl": 1.234042553, "mt": 0.01, "proj": null, "ma": null, "l7": 0.06, "ll7": 0.059, "wt2": 0.01, "wa": 6.0}, {"s": "Overall", "m": "Checkin denied %", "st": null, "snt": null, "wt": null, "d1": 0.006, "da": null, "lmtd": 0.028, "lm": 0.027, "mtd": 0.012, "mvl": 0.4285714286, "mt": 0.005, "proj": null, "ma": null, "l7": 0.017, "ll7": 0.024, "wt2": 0.005, "wa": 3.4}, {"s": "Overall", "m": "App installs", "st": null, "snt": null, "wt": null, "d1": 2960.0, "da": null, "lmtd": 11090.0, "lm": 77665.0, "mtd": 12437.0, "mvl": 1.121460775, "mt": null, "proj": 74622.0, "ma": null, "l7": 17202.0, "ll7": 17787.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "D0 Uninstall %", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Overall", "m": "Sessions", "st": null, "snt": null, "wt": null, "d1": 137497.0, "da": null, "lmtd": 395191.0, "lm": null, "mtd": 550034.0, "mvl": 1.391818134, "mt": null, "proj": 3300204.0, "ma": null, "l7": 743780.0, "ll7": 748364.0, "wt2": null, "wa": null}, {"s": "Overall", "m": "Events per session", "st": null, "snt": null, "wt": null, "d1": 74.2, "da": null, "lmtd": 83.62, "lm": null, "mtd": 80.31, "mvl": 0.9604161684, "mt": null, "proj": 481.86, "ma": null, "l7": 80.94, "ll7": 68.0, "wt2": null, "wa": null}, {"s": "CLASSIFIED", "m": "Listings", "st": 2184.0, "snt": 2328.0, "wt": 2328.0, "d1": 3016.0, "da": 1.380952381, "lmtd": 2648.0, "lm": 79440.0, "mtd": 3096.0, "mvl": 1.16918429, "mt": 69840.0, "proj": 18576.0, "ma": 0.2659793814, "l7": 486.0, "ll7": 404.0, "wt2": 582.0, "wa": 0.8350515464}, {"s": "CLASSIFIED", "m": "Leads", "st": 161.0, "snt": 174.0, "wt": 710.0, "d1": 174.0, "da": 1.080745342, "lmtd": 661.0, "lm": 3653.0, "mtd": 765.0, "mvl": 1.157337368, "mt": 4443.0, "proj": 4590.0, "ma": 1.033085753, "l7": 1045.0, "ll7": 1005.0, "wt2": 1005.0, "wa": 1.039800995}, {"s": "CLASSIFIED", "m": "Lead per listing", "st": 0.07371794872, "snt": 0.07474226804, "wt": 0.3049828179, "d1": 0.05769230769, "da": 0.7826086957, "lmtd": 0.2496223565, "lm": 0.04598439074, "mtd": 0.2470930233, "mvl": 0.9898673609, "mt": 0.06361683849, "proj": null, "ma": null, "l7": 2.150205761, "ll7": 2.487623762376238, "wt2": 1.726804124, "wa": 1.245193784}, {"s": "CLASSIFIED", "m": "Visits", "st": 4.0, "snt": 6.0, "wt": 25.0, "d1": 6.0, "da": 1.5, "lmtd": 30.0, "lm": 187.0, "mtd": 37.0, "mvl": 1.233333333, "mt": 187.0, "proj": 222.0, "ma": 1.187165775, "l7": 52.0, "ll7": 38.0, "wt2": 38.0, "wa": 1.368421053}, {"s": "CLASSIFIED", "m": "L2BC", "st": 0.0976, "snt": 0.1111, "wt": 235.0, "d1": 54.0, "da": 553.2786885, "lmtd": 0.26, "lm": 0.26006022447303584, "mtd": 0.3, "mvl": 1.153846154, "mt": 0.1968421053, "proj": null, "ma": null, "l7": 0.034, "ll7": 0.23582089552238805, "wt2": 0.23582089552238805, "wa": 0.1441772152}, {"s": "CLASSIFIED", "m": "L2V", "st": 0.0248447205, "snt": 0.03448275862, "wt": 0.03521126761, "d1": 0.03448275862, "da": 1.387931034, "lmtd": 0.04538577912, "lm": 0.05119080208, "mtd": 0.04836601307, "mvl": 1.065664488, "mt": 0.3884071011, "proj": null, "ma": null, "l7": 0.04976076555, "ll7": 0.03781094527, "wt2": 0.03781094527, "wa": 1.316041299}, {"s": "ATM", "m": "Videos Live", "st": 4.0, "snt": 4.0, "wt": 2.0, "d1": 3.0, "da": 0.75, "lmtd": 5.0, "lm": 32.0, "mtd": 6.0, "mvl": 1.2, "mt": 75.0, "proj": 60.0, "ma": 0.8, "l7": 3.0, "ll7": 8.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "Leads", "st": 200.0, "snt": 220.0, "wt": 190.0, "d1": 241.0, "da": 1.205, "lmtd": 878.5, "lm": 5971.5, "mtd": 812.0, "mvl": 0.9243027888, "mt": 6000.0, "proj": 4872.0, "ma": 0.812, "l7": 1122.0, "ll7": 1063.5, "wt2": null, "wa": null}, {"s": "ATM", "m": "Visits", "st": 4.0, "snt": 5.0, "wt": 3.0, "d1": 5.0, "da": 1.25, "lmtd": 20.0, "lm": 143.0, "mtd": 16.5, "mvl": 0.825, "mt": 150.0, "proj": 99.0, "ma": 0.66, "l7": 25.0, "ll7": 27.0, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2BC", "st": 0.204, "snt": 0.167, "wt": 0.204, "d1": 0.166, "da": 0.8137254902, "lmtd": 0.147, "lm": 0.15, "mtd": 0.195, "mvl": 1.326530612, "mt": 0.16, "proj": null, "ma": null, "l7": 0.193, "ll7": 0.202, "wt2": null, "wa": null}, {"s": "ATM", "m": "L2V", "st": 0.026, "snt": 0.026, "wt": 0.026, "d1": 0.02, "da": 0.7692307692, "lmtd": 0.023, "lm": 0.024, "mtd": 0.02, "mvl": 0.8695652174, "mt": 0.025, "proj": null, "ma": null, "l7": 0.022, "ll7": 0.025, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "Delivered", "st": 56300.0, "snt": 49800.0, "wt": 39800.0, "d1": 61414.0, "da": 1.090834813, "lmtd": 485060.31850000005, "lm": 1817604.9608, "mtd": 283279.1112, "mvl": 0.5840080097, "mt": 1791922.024, "proj": 1699674.667, "ma": 0.9485204403, "l7": 355892.359, "ll7": 274060.332, "wt2": 255989.0, "wa": 1.390264265}, {"s": "CRM / WA", "m": "CTR", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CRM / WA", "m": "BC", "st": 110.0, "snt": 104.0, "wt": 94.0, "d1": 172.0, "da": 1.563636364, "lmtd": 738.0, "lm": 4053.5172413793102, "mtd": 631.7526559051669, "mvl": 0.8560334091, "mt": 3996.2406442235488, "proj": 3790.515935, "ma": 0.9485204403, "l7": 793.690512732042, "ll7": 740.0, "wt2": 571.0, "wa": 1.390000898}, {"s": "CRM / WA", "m": "Visits", "st": 38.0, "snt": 36.0, "wt": 29.0, "d1": 37.0, "da": 0.9736842105, "lmtd": 258.49361371942825, "lm": 1320.1724137931035, "mtd": 216.0, "mvl": 0.8356105859, "mt": 1301.5182477890514, "proj": 1296.0, "ma": 0.9957601457, "l7": 258.49361371942825, "ll7": 243.0, "wt2": 186.0, "wa": 1.389750611}, {"s": "CRM / WA", "m": "L2BC", "st": 0.001953818828, "snt": 0.002088353414, "wt": 0.002361809045, "d1": 0.002800664344, "da": 1.433430932, "lmtd": 0.001521460264, "lm": 0.002230142043, "mtd": 0.002230142043, "mvl": 1.465790528, "mt": 0.002230142043, "proj": null, "ma": null, "l7": 0.002230142043, "ll7": 0.002700135385, "wt2": 0.002230564595, "wa": 0.9998105631}, {"s": "CRM / WA", "m": "L2V", "st": 0.000674955595, "snt": 0.0007228915663, "wt": 0.0007286432161, "d1": 0.0006024684925, "da": 0.892604635, "lmtd": 0.0005329102461, "lm": 0.0007263252699, "mtd": 0.0007624988623, "mvl": 1.43082042, "mt": 0.0007263252699, "proj": null, "ma": null, "l7": 0.0007263252699, "ll7": 0.0008866660791, "wt2": 0.0007265937208, "wa": 0.9996305351}, {"s": "CRM / Call us", "m": "Leads", "st": 126.0, "snt": 123.0, "wt": 124.0, "d1": 160.0, "da": 1.26984127, "lmtd": 77.0, "lm": 503.0, "mtd": 619.0, "mvl": 8.038961039, "mt": 3980.0, "proj": 3714.0, "ma": 0.9331658291, "l7": 638.0, "ll7": 115.0, "wt2": 569.0, "wa": 1.121265378}, {"s": "CRM / Call us", "m": "Calls Connected", "st": 85.68, "snt": 84.86999999999999, "wt": 80.60000000000001, "d1": 95.0, "da": 1.108776844, "lmtd": 43.0, "lm": 330.0, "mtd": 428.0, "mvl": 9.953488372, "mt": 2612.0, "proj": 2568.0, "ma": 0.9831546708, "l7": 442.0, "ll7": 58.0, "wt2": 373.0, "wa": 1.184986595}, {"s": "CRM / Call us", "m": "C2L%", "st": 0.68, "snt": 0.69, "wt": 0.65, "d1": 0.59375, "da": 0.8731617647, "lmtd": 0.5584415584, "lm": 0.6560636183, "mtd": 0.6914378029, "mvl": 1.238156066, "mt": 0.656281407, "proj": null, "ma": null, "l7": 0.6927899687, "ll7": 0.5043478261, "wt2": 0.6555360281, "wa": 1.056829738}, {"s": "CRM / Call us", "m": "BC", "st": 13.0, "snt": 14.0, "wt": 13.0, "d1": 22.0, "da": 1.692307692, "lmtd": 3.0, "lm": 50.0, "mtd": 113.0, "mvl": 37.66666667, "mt": 395.6262425, "proj": 678.0, "ma": 1.713738693, "l7": 116.0, "ll7": 8.0, "wt2": 57.0, "wa": 2.035087719}, {"s": "CRM / Call us", "m": "L2BC", "st": 0.1031746032, "snt": 0.1138211382, "wt": 0.1048387097, "d1": 0.1375, "da": 1.332692308, "lmtd": 0.03896103896, "lm": 0.09940357853, "mtd": 0.182552504, "mvl": 4.68551427, "mt": 0.09940357853, "proj": null, "ma": null, "l7": 0.1818181818, "ll7": 0.06956521739, "wt2": 0.1001757469, "wa": 1.814992026}, {"s": "CRM / Call us", "m": "L2V", "st": 0.0115, "snt": 0.0115, "wt": 0.0113, "d1": 0.0, "da": 0.0, "lmtd": 0.025974025974025976, "lm": 0.02186878727634195, "mtd": 0.011308562197092083, "mvl": 0.4353796446, "mt": 0.0219, "proj": null, "ma": null, "l7": 0.0109717868338558, "ll7": 0.008695652173913044, "wt2": 0.008695652173913044, "wa": 1.261755486}, {"s": "IVR", "m": "Leads", "st": 93.0, "snt": 95.0, "wt": 87.0, "d1": 90.0, "da": 0.9677419355, "lmtd": 142.0, "lm": 2471.0, "mtd": 521.0, "mvl": 3.669014085, "mt": 3189.0, "proj": 3126.0, "ma": 0.9802445908, "l7": 646.0, "ll7": 500.0, "wt2": 456.0, "wa": 1.416666667}, {"s": "IVR", "m": "Calls Connected", "st": 79.0, "snt": 79.0, "wt": 72.0, "d1": 74.0, "da": 0.9367088608, "lmtd": 111.0, "lm": 1933.0, "mtd": 436.0, "mvl": 3.927927928, "mt": 2488.0, "proj": 2616.0, "ma": 1.051446945, "l7": 539.0, "ll7": 408.0, "wt2": 356.0, "wa": 1.514044944}, {"s": "IVR", "m": "connected%", "st": 0.8494623656, "snt": 0.8315789474, "wt": 0.8275862069, "d1": 0.8222222222, "da": 0.9679324895, "lmtd": 0.7816901408, "lm": 0.7822743828, "mtd": 0.8368522073, "mvl": 1.070567689, "mt": 0.7801818752, "proj": null, "ma": null, "l7": 0.8343653251, "ll7": 0.816, "wt2": 0.7807017544, "wa": 1.068737607}, {"s": "IVR", "m": "BC", "st": 20.0, "snt": 20.0, "wt": 18.0, "d1": 19.0, "da": 0.95, "lmtd": 26.0, "lm": 374.0, "mtd": 116.0, "mvl": 4.461538462, "mt": 542.13, "proj": 696.0, "ma": 1.283824913, "l7": 148.0, "ll7": 107.0, "wt2": 77.0, "wa": 1.922077922}, {"s": "IVR", "m": "L2BC", "st": 0.2150537634, "snt": 0.2105263158, "wt": 0.2068965517, "d1": 0.2111111111, "da": 0.9816666667, "lmtd": 0.1830985915, "lm": 0.1513557264, "mtd": 0.2226487524, "mvl": 1.216004725, "mt": 0.17, "proj": null, "ma": null, "l7": 0.2291021672, "ll7": 0.214, "wt2": 0.1688596491, "wa": 1.356760886}, {"s": "IVR", "m": "L2V", "st": 0.0455, "snt": 0.05, "wt": 0.0421, "d1": 0.0222, "da": 0.4879120879, "lmtd": 0.04225352112676056, "lm": 0.021448806151355727, "mtd": 0.011516314779270634, "mvl": 0.2725527831, "mt": 0.0182, "proj": null, "ma": null, "l7": 0.015479876160990712, "ll7": 0.028, "wt2": 0.028, "wa": 0.55285272}, {"s": "Google - Total", "m": "Spends", "st": 33600.0, "snt": 33600.0, "wt": 31360.0, "d1": 40502.0, "da": 1.205416667, "lmtd": 119533.0, "lm": 896657.0, "mtd": 163019.0, "mvl": 1.363799118, "mt": null, "proj": 978114.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Clicks", "st": 10391.82385, "snt": 10459.14953, "wt": 9344.625668, "d1": 11611.0, "da": 1.11732071, "lmtd": 18189.0, "lm": 267910.0, "mtd": 48702.0, "mvl": 2.677552367, "mt": null, "proj": 292212.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 210.0, "lm": 2036.0, "mtd": 348.0, "mvl": 1.657142857, "mt": null, "proj": 2088.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 0.01154543955, "lm": 0.007599567019, "mtd": 0.007145497105, "mvl": 0.6189021278, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Total", "m": "CPC", "st": 3.233311158, "snt": 3.212498291, "wt": 3.355939672, "d1": 3.488243907, "da": 1.078845721, "lmtd": 6.571719171, "lm": 3.34685902, "mtd": 3.347275266, "mvl": 0.5093454511, "mt": null, "proj": 20.0836516, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Spends", "st": 15750.0, "snt": 15750.0, "wt": 14700.0, "d1": 14262.0, "da": 0.9055238095, "lmtd": 46425.0, "lm": 405758.0, "mtd": 75182.0, "mvl": 1.619429187, "mt": null, "proj": 451092.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Clicks", "st": 7159.090909, "snt": 7159.090909, "wt": 6125.0, "d1": 6165.0, "da": 0.8611428571, "lmtd": 6255.0, "lm": 182292.0, "mtd": 32332.0, "mvl": 5.168984812, "mt": null, "proj": 193992.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 99.0, "lm": 1148.0, "mtd": 207.0, "mvl": 2.090909091, "mt": null, "proj": 1242.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 0.01582733813, "lm": 0.006297588484, "mtd": 0.006402325869, "mvl": 0.404510589, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - PMAX", "m": "CPC", "st": 2.2, "snt": 2.2, "wt": 2.4, "d1": 2.3, "da": 1.045454545, "lmtd": 37.09, "lm": 2.225868387, "mtd": 11.69, "mvl": 0.3151792936, "mt": null, "proj": 70.14, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Spends", "st": 4725.0, "snt": 4725.0, "wt": 4410.0, "d1": 5413.0, "da": 1.145608466, "lmtd": 20921.0, "lm": 138087.0, "mtd": 24526.0, "mvl": 1.172314899, "mt": null, "proj": 147156.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Clicks", "st": 445.754717, "snt": 467.8217822, "wt": 432.3529412, "d1": 554.0, "da": 1.242835979, "lmtd": 2135.0, "lm": 13089.0, "mtd": 2374.0, "mvl": 1.111943794, "mt": null, "proj": 14244.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 27.0, "lm": 180.0, "mtd": 25.0, "mvl": 0.9259259259, "mt": null, "proj": 150.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 0.01264637002, "lm": 0.0137520055, "mtd": 0.01053074979, "mvl": 0.8327092889, "mt": null, "proj": null, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "Installs", "st": 154.0, "snt": 154.0, "wt": 134.0, "d1": 160.0, "da": 1.038961039, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPI", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACi", "m": "CPC", "st": 10.6, "snt": 10.1, "wt": 10.2, "d1": 9.8, "da": 0.9245283019, "lmtd": 9.799063232, "lm": 10.54985102, "mtd": 10.33108677, "mvl": 1.054293306, "mt": null, "proj": 61.98652064, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Spends", "st": 7350.0, "snt": 7350.0, "wt": 6860.0, "d1": 14593.0, "da": 1.985442177, "lmtd": 35858.0, "lm": 216499.0, "mtd": 39256.0, "mvl": 1.094762675, "mt": null, "proj": 235536.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Clicks", "st": 1267.241379, "snt": 1312.5, "wt": 1247.272727, "d1": 3320.0, "da": 2.619863946, "lmtd": 5661.0, "lm": 37878.0, "mtd": 6817.0, "mvl": 1.204204204, "mt": null, "proj": 40902.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 72.0, "lm": 535.0, "mtd": 97.0, "mvl": 1.347222222, "mt": null, "proj": 582.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 0.01271860095, "lm": 0.01412429379, "mtd": 0.01422913305, "mvl": 1.118765586, "mt": null, "proj": 0.0853747983, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - UACe", "m": "CPC", "st": 5.8, "snt": 5.6, "wt": 5.5, "d1": 4.4, "da": 0.7586206897, "lmtd": 6.33421657, "lm": 5.715692486, "mtd": 5.758544814, "mvl": 0.9091171341, "mt": null, "proj": 34.55126889, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Spends", "st": 5775.0, "snt": 5775.0, "wt": 5390.0, "d1": 6234.0, "da": 1.079480519, "lmtd": 16329.0, "lm": 136313.0, "mtd": 24055.0, "mvl": 1.473145937, "mt": null, "proj": 144330.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Clicks", "st": 1519.736842, "snt": 1519.736842, "wt": 1540.0, "d1": 1572.0, "da": 1.03438961, "lmtd": 4138.0, "lm": 34651.0, "mtd": 7179.0, "mvl": 1.734896085, "mt": null, "proj": 43074.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 12.0, "lm": 173.0, "mtd": 19.0, "mvl": 1.583333333, "mt": null, "proj": 114.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "Click2BC%", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 0.002899951667, "lm": 0.004992640905, "mtd": 0.002646608163, "mvl": 0.9126387148, "mt": null, "proj": 0.01587964898, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Google - Search", "m": "CPC", "st": 3.8, "snt": 3.8, "wt": 3.5, "d1": 4.0, "da": 1.052631579, "lmtd": 19.77, "lm": 3.933883582, "mtd": 16.6, "mvl": 0.8396560445, "mt": null, "proj": 99.6, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Spends", "st": 34440.0, "snt": 34440.0, "wt": 32144.0, "d1": 47282.0, "da": 1.372880372, "lmtd": 136560.0, "lm": 971696.0, "mtd": 206778.0, "mvl": 1.514191564, "mt": null, "proj": 1240668.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "Clicks", "st": 7655.484897, "snt": 7655.484897, "wt": 6526.27816, "d1": 10030.0, "da": 1.310171744, "lmtd": 29147.0, "lm": 206820.0, "mtd": 43554.0, "mvl": 1.494287577, "mt": null, "proj": 261324.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - Total", "m": "CPC", "st": 4.498735281, "snt": 4.498735281, "wt": 4.925318721, "d1": 4.714057827, "da": 1.047862906, "lmtd": 4.685216317, "lm": 4.698269026, "mtd": 4.74762364, "mvl": 1.013320051, "mt": null, "proj": 28.48574184, "ma": null, "l7": 216863.0, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Spends", "st": 26040.0, "snt": 26040.0, "wt": 24304.0, "d1": 39177.0, "da": 1.504493088, "lmtd": 104172.0, "lm": 731068.0, "mtd": 167048.0, "mvl": 1.603578697, "mt": null, "proj": 1002288.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "Clicks", "st": 7037.837838, "snt": 7037.837838, "wt": 5927.804878, "d1": 9438.0, "da": 1.341036866, "lmtd": 26629.0, "lm": 188944.0, "mtd": 40484.0, "mvl": 1.52029742, "mt": null, "proj": 242904.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 301.0, "lm": 2027.0, "mtd": 337.0, "mvl": 1.119601329, "mt": null, "proj": 2022.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook - catalog", "m": "CPC", "st": 3.7, "snt": 3.7, "wt": 4.1, "d1": 4.2, "da": 1.135135135, "lmtd": 3.911975666, "lm": 3.869231095, "mtd": 4.126272107, "mvl": 1.054779595, "mt": null, "proj": 24.75763264, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Spends", "st": 8400.0, "snt": 8400.0, "wt": 7840.0, "d1": 8105.0, "da": 0.9648809524, "lmtd": 32388.0, "lm": 240628.0, "mtd": 39730.0, "mvl": 1.226688897, "mt": null, "proj": 238380.0, "ma": null, "l7": 55842.0, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "Clicks", "st": 617.6470588, "snt": 617.6470588, "wt": 598.4732824, "d1": 592.0, "da": 0.9584761905, "lmtd": 2518.0, "lm": 17876.0, "mtd": 3070.0, "mvl": 1.219221604, "mt": null, "proj": 18420.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": 72.0, "lm": 378.0, "mtd": 41.0, "mvl": 0.5694444444, "mt": null, "proj": 246.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Facebook -conversion", "m": "CPC", "st": 13.6, "snt": 13.6, "wt": 13.1, "d1": 13.7, "da": 1.007352941, "lmtd": 12.86258936, "lm": 13.46095323, "mtd": 12.94136808, "mvl": 1.006124639, "mt": null, "proj": 77.64820847, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "Spends", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "Criteo", "m": "CPBC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "GMB", "m": "Leads", "st": 220.0, "snt": 235.0, "wt": 190.0, "d1": 181.0, "da": 0.8227272727, "lmtd": 842.0, "lm": 4768.0, "mtd": 815.0, "mvl": 0.9679334917, "mt": 6000.0, "proj": 4890.0, "ma": 0.815, "l7": 1058.0, "ll7": 996.0, "wt2": 1500.0, "wa": 0.7053333333}, {"s": "GMB", "m": "BC", "st": 30.0, "snt": 35.0, "wt": 25.0, "d1": 31.0, "da": 1.033333333, "lmtd": 109.0, "lm": 707.0, "mtd": 163.0, "mvl": 1.495412844, "mt": 810.0, "proj": 978.0, "ma": 1.207407407, "l7": 202.0, "ll7": 183.0, "wt2": 202.5, "wa": 0.9975308642}, {"s": "GMB", "m": "Visits", "st": 9.0, "snt": 12.0, "wt": 8.0, "d1": 11.0, "da": 1.222222222, "lmtd": 35.0, "lm": 202.0, "mtd": 46.0, "mvl": 1.314285714, "mt": 260.0, "proj": 276.0, "ma": 1.061538462, "l7": 59.0, "ll7": 45.0, "wt2": 65.0, "wa": 0.9076923077}, {"s": "GMB", "m": "L2BC", "st": 0.1363636364, "snt": 0.1489361702, "wt": 0.1315789474, "d1": 0.1712707182, "da": 1.255985267, "lmtd": 0.1294536817, "lm": 0.1482802013, "mtd": 0.2, "mvl": 1.544954128, "mt": 0.135, "proj": 1.2, "ma": 8.888888889, "l7": 0.190926276, "ll7": 0.1837349398, "wt2": 0.135, "wa": 1.414268711}, {"s": "GMB", "m": "L2V", "st": 0.04090909091, "snt": 0.05106382979, "wt": 0.04210526316, "d1": 0.06077348066, "da": 1.485573972, "lmtd": 0.04156769596, "lm": 0.04236577181, "mtd": 0.05644171779, "mvl": 1.357826468, "mt": 0.04333333333, "proj": 0.3386503067, "ma": 7.815007079, "l7": 0.05576559546, "ll7": 0.04518072289, "wt2": 0.04333333333, "wa": 1.286898357}, {"s": "Affiliates", "m": "Leads", "st": 61.876624246996606, "snt": 54.9223118784012, "wt": 51.56385353916384, "d1": 13.0, "da": 0.210095495, "lmtd": 64.0, "lm": 511.0, "mtd": 89.0, "mvl": 1.390625, "mt": 1600.0, "proj": 534.0, "ma": 0.33375, "l7": 144.0, "ll7": 107.0, "wt2": 400.0, "wa": 0.36}, {"s": "Affiliates", "m": "BC", "st": 34.522314049586775, "snt": 24.465454545454545, "wt": 16.68099173553719, "d1": 9.0, "da": 0.260700948, "lmtd": 33.0, "lm": 220.0, "mtd": 31.0, "mvl": 0.9393939394, "mt": 600.0, "proj": 186.0, "ma": 0.31, "l7": 52.0, "ll7": 55.0, "wt2": 150.0, "wa": 0.3466666667}, {"s": "Affiliates", "m": "Visits", "st": 17.86252727633406, "snt": 9.042650267804007, "wt": 4.285657607617536, "d1": 4.0, "da": 0.2239324782, "lmtd": 16.0, "lm": 71.0, "mtd": 8.0, "mvl": 0.5, "mt": 200.0, "proj": 48.0, "ma": 0.24, "l7": 14.0, "ll7": 27.0, "wt2": 50.0, "wa": 0.28}, {"s": "Affiliates", "m": "L2BC", "st": 0.557921743, "snt": 0.4454556574, "wt": 0.3235016507, "d1": 0.6923076923, "da": 1.240868815, "lmtd": 0.515625, "lm": 0.4305283757, "mtd": 0.3483146067, "mvl": 0.6755192373, "mt": 0.375, "proj": 2.08988764, "ma": 5.573033708, "l7": 0.3611111111, "ll7": 0.5140186916, "wt2": 0.375, "wa": 0.962962963}, {"s": "Affiliates", "m": "L2V", "st": 0.2886797315, "snt": 0.1646443851, "wt": 0.08311360214, "d1": 0.3076923077, "da": 1.065860447, "lmtd": 0.25, "lm": 0.1389432485, "mtd": 0.08988764045, "mvl": 0.3595505618, "mt": 0.125, "proj": 0.5393258427, "ma": 4.314606742, "l7": 0.09722222222, "ll7": 0.2523364486, "wt2": 0.125, "wa": 0.7777777778}, {"s": "CC (INBOUND)", "m": "Leads", "st": 350.0, "snt": 380.0, "wt": 150.0, "d1": 337.0, "da": 0.9628571429, "lmtd": 664.0, "lm": 4403.0, "mtd": 1388.0, "mvl": 2.090361446, "mt": null, "proj": 8328.0, "ma": null, "l7": 1621.0, "ll7": 1001.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "Visits", "st": 30.0, "snt": 37.0, "wt": 12.0, "d1": 27.0, "da": 0.9, "lmtd": 79.0, "lm": 399.0, "mtd": 96.0, "mvl": 1.215189873, "mt": null, "proj": 576.0, "ma": null, "l7": 117.0, "ll7": 90.0, "wt2": null, "wa": null}, {"s": "CC (INBOUND)", "m": "L2V", "st": 0.08571428571, "snt": 0.09736842105, "wt": 0.08, "d1": 0.08011869436, "da": 0.9347181009, "lmtd": 0.1189759036, "lm": 0.0906200318, "mtd": 0.06916426513, "mvl": 0.5813300259, "mt": null, "proj": 0.4149855908, "ma": null, "l7": 0.07217766811, "ll7": 0.08991008991, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Leads", "st": 120.0, "snt": 150.0, "wt": 120.0, "d1": 139.0, "da": 1.158333333, "lmtd": 683.0, "lm": 3943.0, "mtd": 549.0, "mvl": 0.803806735, "mt": null, "proj": 3294.0, "ma": null, "l7": 758.0, "ll7": 981.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "Visits", "st": 6.0, "snt": 9.0, "wt": 5.0, "d1": 3.0, "da": 0.5, "lmtd": 19.0, "lm": 138.0, "mtd": 29.0, "mvl": 1.526315789, "mt": null, "proj": 174.0, "ma": null, "l7": 39.0, "ll7": 33.0, "wt2": null, "wa": null}, {"s": "CC (OUTBOUND)", "m": "L2V", "st": 0.05, "snt": 0.06, "wt": 0.04166666667, "d1": 0.02158273381, "da": 0.4316546763, "lmtd": 0.02781844802, "lm": 0.03499873193, "mtd": 0.05282331512, "mvl": 1.89885917, "mt": null, "proj": 0.3169398907, "ma": null, "l7": 0.05145118734, "ll7": 0.03363914373, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "Visits", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC (BC2V)", "m": "L2V", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "Leads", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "L2BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}, {"s": "CC(BI2BC)", "m": "BC", "st": null, "snt": null, "wt": null, "d1": null, "da": null, "lmtd": null, "lm": null, "mtd": null, "mvl": null, "mt": null, "proj": 0.0, "ma": null, "l7": null, "ll7": null, "wt2": null, "wa": null}]};
+    if(I&&I.data&&I.data.length){
+      const dk=I.meta.date||'latest';
+      STORE['Mumbai']={};STORE['Mumbai'][dk]=I;
+      activeCity='Mumbai';activeDate=dk;
+      rebuildDropdowns();
     }
-  } catch(e){}
+  }catch(e){}
 })();
 </script>
 </body>
